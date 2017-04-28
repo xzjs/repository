@@ -1,0 +1,229 @@
+fileFormatVersion: 2
+guid: dc00117c1f6a14748a9d8a762008da57
+timeCreated: 1493341689
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Box3358
+    100002: Box3362
+    100004: Box8977
+    100006: Box8979
+    100008: Box9029
+    100010: //RootNode
+    100012: "\u56FE\u5F62409"
+    100014: "\u56FE\u5F62412"
+    100016: "\u56FE\u5F62413"
+    100018: "\u56FE\u5F62414"
+    100020: "\u56FE\u5F62415"
+    100022: "\u56FE\u5F62416"
+    100024: "\u56FE\u5F62417"
+    100026: "\u56FE\u5F62418"
+    100028: "\u56FE\u5F62419"
+    100030: "\u56FE\u5F62420"
+    100032: "\u56FE\u5F62421"
+    100034: "\u56FE\u5F62422"
+    100036: "\u56FE\u5F62423"
+    100038: "\u56FE\u5F62424"
+    100040: "\u56FE\u5F62425"
+    100042: "\u56FE\u5F62426"
+    100044: "\u56FE\u5F62427"
+    100046: "\u56FE\u5F62428"
+    100048: "\u56FE\u5F62429"
+    100050: "\u5BF9\u8C6196"
+    400000: Box3358
+    400002: Box3362
+    400004: Box8977
+    400006: Box8979
+    400008: Box9029
+    400010: //RootNode
+    400012: "\u56FE\u5F62409"
+    400014: "\u56FE\u5F62412"
+    400016: "\u56FE\u5F62413"
+    400018: "\u56FE\u5F62414"
+    400020: "\u56FE\u5F62415"
+    400022: "\u56FE\u5F62416"
+    400024: "\u56FE\u5F62417"
+    400026: "\u56FE\u5F62418"
+    400028: "\u56FE\u5F62419"
+    400030: "\u56FE\u5F62420"
+    400032: "\u56FE\u5F62421"
+    400034: "\u56FE\u5F62422"
+    400036: "\u56FE\u5F62423"
+    400038: "\u56FE\u5F62424"
+    400040: "\u56FE\u5F62425"
+    400042: "\u56FE\u5F62426"
+    400044: "\u56FE\u5F62427"
+    400046: "\u56FE\u5F62428"
+    400048: "\u56FE\u5F62429"
+    400050: "\u5BF9\u8C6196"
+    2300000: Box3358
+    2300002: Box3362
+    2300004: Box8977
+    2300006: Box8979
+    2300008: Box9029
+    2300010: "\u56FE\u5F62409"
+    2300012: "\u56FE\u5F62412"
+    2300014: "\u56FE\u5F62413"
+    2300016: "\u56FE\u5F62414"
+    2300018: "\u56FE\u5F62415"
+    2300020: "\u56FE\u5F62416"
+    2300022: "\u56FE\u5F62417"
+    2300024: "\u56FE\u5F62418"
+    2300026: "\u56FE\u5F62419"
+    2300028: "\u56FE\u5F62420"
+    2300030: "\u56FE\u5F62421"
+    2300032: "\u56FE\u5F62422"
+    2300034: "\u56FE\u5F62423"
+    2300036: "\u56FE\u5F62424"
+    2300038: "\u56FE\u5F62425"
+    2300040: "\u56FE\u5F62426"
+    2300042: "\u56FE\u5F62427"
+    2300044: "\u56FE\u5F62428"
+    2300046: "\u56FE\u5F62429"
+    2300048: "\u5BF9\u8C6196"
+    3300000: Box3358
+    3300002: Box3362
+    3300004: Box8977
+    3300006: Box8979
+    3300008: Box9029
+    3300010: "\u56FE\u5F62409"
+    3300012: "\u56FE\u5F62412"
+    3300014: "\u56FE\u5F62413"
+    3300016: "\u56FE\u5F62414"
+    3300018: "\u56FE\u5F62415"
+    3300020: "\u56FE\u5F62416"
+    3300022: "\u56FE\u5F62417"
+    3300024: "\u56FE\u5F62418"
+    3300026: "\u56FE\u5F62419"
+    3300028: "\u56FE\u5F62420"
+    3300030: "\u56FE\u5F62421"
+    3300032: "\u56FE\u5F62422"
+    3300034: "\u56FE\u5F62423"
+    3300036: "\u56FE\u5F62424"
+    3300038: "\u56FE\u5F62425"
+    3300040: "\u56FE\u5F62426"
+    3300042: "\u56FE\u5F62427"
+    3300044: "\u56FE\u5F62428"
+    3300046: "\u56FE\u5F62429"
+    3300048: "\u5BF9\u8C6196"
+    4300000: Box3358
+    4300002: Box3362
+    4300004: Box9029
+    4300006: "\u56FE\u5F62413"
+    4300008: Box8977
+    4300010: Box8979
+    4300012: "\u5BF9\u8C6196"
+    4300014: "\u56FE\u5F62414"
+    4300016: "\u56FE\u5F62409"
+    4300018: "\u56FE\u5F62412"
+    4300020: "\u56FE\u5F62415"
+    4300022: "\u56FE\u5F62416"
+    4300024: "\u56FE\u5F62417"
+    4300026: "\u56FE\u5F62418"
+    4300028: "\u56FE\u5F62419"
+    4300030: "\u56FE\u5F62420"
+    4300032: "\u56FE\u5F62421"
+    4300034: "\u56FE\u5F62422"
+    4300036: "\u56FE\u5F62423"
+    4300038: "\u56FE\u5F62425"
+    4300040: "\u56FE\u5F62426"
+    4300042: "\u56FE\u5F62427"
+    4300044: "\u56FE\u5F62428"
+    4300046: "\u56FE\u5F62429"
+    4300048: "\u56FE\u5F62424"
+    6400000: Box3358
+    6400002: Box3362
+    6400004: Box8977
+    6400006: Box8979
+    6400008: Box9029
+    6400010: "\u56FE\u5F62409"
+    6400012: "\u56FE\u5F62412"
+    6400014: "\u56FE\u5F62413"
+    6400016: "\u56FE\u5F62414"
+    6400018: "\u56FE\u5F62415"
+    6400020: "\u56FE\u5F62416"
+    6400022: "\u56FE\u5F62417"
+    6400024: "\u56FE\u5F62418"
+    6400026: "\u56FE\u5F62419"
+    6400028: "\u56FE\u5F62420"
+    6400030: "\u56FE\u5F62421"
+    6400032: "\u56FE\u5F62422"
+    6400034: "\u56FE\u5F62423"
+    6400036: "\u56FE\u5F62424"
+    6400038: "\u56FE\u5F62425"
+    6400040: "\u56FE\u5F62426"
+    6400042: "\u56FE\u5F62427"
+    6400044: "\u56FE\u5F62428"
+    6400046: "\u56FE\u5F62429"
+    6400048: "\u5BF9\u8C6196"
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 1
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

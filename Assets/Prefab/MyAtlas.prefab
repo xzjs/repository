@@ -54,8 +54,8 @@ MonoBehaviour:
   material: {fileID: 2100000, guid: d568255d6729dfe47b156f0e9aebaff6, type: 2}
   mSprites:
   - name: CanClick
-    x: 810
-    y: 15
+    x: 121
+    y: 123
     width: 112
     height: 113
     borderLeft: 0
@@ -67,8 +67,8 @@ MonoBehaviour:
     paddingTop: 7
     paddingBottom: 8
   - name: Click
-    x: 689
-    y: 8
+    x: 0
+    y: 116
     width: 120
     height: 120
     borderLeft: 0
@@ -79,10 +79,23 @@ MonoBehaviour:
     paddingRight: 4
     paddingTop: 4
     paddingBottom: 4
-  - name: u4
+  - name: u10
     x: 0
-    y: 33
-    width: 688
+    y: 333
+    width: 583
+    height: 595
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: u2
+    x: 0
+    y: 237
+    width: 305
     height: 95
     borderLeft: 0
     borderRight: 0
@@ -92,6 +105,45 @@ MonoBehaviour:
     paddingRight: 1
     paddingTop: 0
     paddingBottom: 1
+  - name: u4
+    x: 121
+    y: 1
+    width: 99
+    height: 121
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 16
+    paddingRight: 13
+    paddingTop: 4
+    paddingBottom: 3
+  - name: u69
+    x: 0
+    y: 929
+    width: 777
+    height: 95
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 0
+    paddingRight: 1
+    paddingTop: 0
+    paddingBottom: 1
+  - name: u71
+    x: 0
+    y: 3
+    width: 118
+    height: 112
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 5
+    paddingRight: 5
+    paddingTop: 8
+    paddingBottom: 8
   mPixelSize: 1
   mReplacement: {fileID: 0}
   mCoordinates: 0

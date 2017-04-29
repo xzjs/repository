@@ -17,6 +17,16 @@ public class GameController : MonoBehaviour
 	    {
 	        FirstPersonController first = FPSController.GetComponent<FirstPersonController>();
 	        first.enabled = !first.enabled;
+	        if (Cursor.lockState == CursorLockMode.Locked)
+	        {
+	            Cursor.lockState = CursorLockMode.None;
+	            Cursor.visible = true;
+	        }
+	        else
+	        {
+	            Cursor.lockState=CursorLockMode.Locked;
+	            Cursor.visible = false;
+	        }
 	    }
 	}
 }

@@ -5,7 +5,7 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class GameController : MonoBehaviour
 {
-    public GameObject FPSController;
+    public GameObject FpsController, MainCamera;
 	// Use this for initialization
 	void Start () {
 		
@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour
 	void Update () {
 	    if (Input.GetKeyDown("tab"))
 	    {
-	        FirstPersonController first = FPSController.GetComponent<FirstPersonController>();
+	        FirstPersonController first = FpsController.GetComponent<FirstPersonController>();
 	        first.enabled = !first.enabled;
 	        if (Cursor.lockState == CursorLockMode.Locked)
 	        {
@@ -29,4 +29,21 @@ public class GameController : MonoBehaviour
 	        }
 	    }
 	}
+
+    /// <summary>
+    /// 切换视角
+    /// </summary>
+    public void ChangeCamera()
+    {
+        if (MainCamera.activeSelf)
+        {
+            MainCamera.SetActive(false);
+            FpsController.SetActive(true);
+        }
+        else
+        {
+            MainCamera.SetActive(true);;
+            FpsController.SetActive(false);
+        }
+    }
 }

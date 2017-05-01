@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Drag and Drop Root
   - Shelf
+  - UI
   layers:
   - Default
   - TransparentFX

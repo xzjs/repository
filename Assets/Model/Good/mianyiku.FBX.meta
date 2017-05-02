@@ -1,0 +1,163 @@
+fileFormatVersion: 2
+guid: a340cecde650f0842bea16deb1e3793a
+timeCreated: 1493706449
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Box7585
+    100002: Box7586
+    100004: Box7587
+    100006: Box7588
+    100008: Box7589
+    100010: Box7590
+    100012: Box7592
+    100014: Box7593
+    100016: Box7594
+    100018: Box7595
+    100020: Box7596
+    100022: Box7597
+    100024: Box7598
+    100026: Box7600
+    100028: //RootNode
+    400000: Box7585
+    400002: Box7586
+    400004: Box7587
+    400006: Box7588
+    400008: Box7589
+    400010: Box7590
+    400012: Box7592
+    400014: Box7593
+    400016: Box7594
+    400018: Box7595
+    400020: Box7596
+    400022: Box7597
+    400024: Box7598
+    400026: Box7600
+    400028: //RootNode
+    2300000: Box7585
+    2300002: Box7586
+    2300004: Box7587
+    2300006: Box7588
+    2300008: Box7589
+    2300010: Box7590
+    2300012: Box7592
+    2300014: Box7593
+    2300016: Box7594
+    2300018: Box7595
+    2300020: Box7596
+    2300022: Box7597
+    2300024: Box7598
+    2300026: Box7600
+    3300000: Box7585
+    3300002: Box7586
+    3300004: Box7587
+    3300006: Box7588
+    3300008: Box7589
+    3300010: Box7590
+    3300012: Box7592
+    3300014: Box7593
+    3300016: Box7594
+    3300018: Box7595
+    3300020: Box7596
+    3300022: Box7597
+    3300024: Box7598
+    3300026: Box7600
+    4300000: Box7593
+    4300002: Box7594
+    4300004: Box7595
+    4300006: Box7596
+    4300008: Box7597
+    4300010: Box7598
+    4300012: Box7600
+    4300014: Box7585
+    4300016: Box7586
+    4300018: Box7587
+    4300020: Box7588
+    4300022: Box7589
+    4300024: Box7590
+    4300026: Box7592
+    6400000: Box7585
+    6400002: Box7586
+    6400004: Box7587
+    6400006: Box7588
+    6400008: Box7589
+    6400010: Box7590
+    6400012: Box7592
+    6400014: Box7593
+    6400016: Box7594
+    6400018: Box7595
+    6400020: Box7596
+    6400022: Box7597
+    6400024: Box7598
+    6400026: Box7600
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 1
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: mianyiku
+  assetBundleVariant: 

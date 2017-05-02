@@ -64,7 +64,7 @@ public class GameController : MonoBehaviour
             var shelfs = JsonHelper.FromJson<Shelf>("{\"Items\":" + getData.text + "}");
             foreach (var shelf in shelfs)
             {
-                //Dictionary<(string,string),int> dictionary=new Dictionary<(), int>();
+                Dictionary<string,GoodInfo> dictionary=new Dictionary<string, GoodInfo>();
                 foreach (var floor in shelf.floors)
                 {
                     foreach (var cell in floor.cells)
@@ -76,9 +76,23 @@ public class GameController : MonoBehaviour
                         var clone = Instantiate(g, c).transform;
                         clone.Rotate(90, 0, 0);
                         clone.localPosition = new Vector3(0, -0.4f, 0.7f);
-                        
+                        if (dictionary.ContainsKey(good.name))
+                        {
+                            dictionary[good.name].num += good.num;
+                        }
+                        else
+                        {
+                            dictionary[good.name]=new GoodInfo
+                            {
+                                num = good.num,
+                                unit = good.unit
+                            };
+                        }
                     }
                 }
+                ShelfUIController shelfUiController =
+                    GameObject.Find("shelf" + shelf.no).GetComponentInChildren<ShelfUIController>();
+                shelfUiController.SetData(dictionary);
             }
         }
     }

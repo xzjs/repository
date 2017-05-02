@@ -72,4 +72,10 @@ namespace Assets.Script
             public T[] Items;
         }
     }
+
+    public class GoodInfo
+    {
+        public int num;
+        public string unit;
+    }
 }

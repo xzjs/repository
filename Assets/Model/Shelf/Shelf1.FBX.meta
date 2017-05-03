@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 32304478f30ceaa46984f1dacc81db10
-timeCreated: 1493541445
+guid: 6f7477084ad079944a8e2eb693bbb109
+timeCreated: 1493791954
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -69,8 +69,8 @@ ModelImporter:
     100122: 1-3-7
     100124: 1-3-8
     100126: 1-3-9
-    100128: Box636
-    100130: //RootNode
+    100128: //RootNode
+    100130: Box636
     100132: "\u56FE\u5F62220"
     100134: "\u56FE\u5F62221"
     100136: "\u56FE\u5F62222"
@@ -157,8 +157,8 @@ ModelImporter:
     400122: 1-3-7
     400124: 1-3-8
     400126: 1-3-9
-    400128: Box636
-    400130: //RootNode
+    400128: //RootNode
+    400130: Box636
     400132: "\u56FE\u5F62220"
     400134: "\u56FE\u5F62221"
     400136: "\u56FE\u5F62222"

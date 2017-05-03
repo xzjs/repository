@@ -13,11 +13,12 @@ public class ShelfUIController : MonoBehaviour
     {
         foreach (var info in dictionary)
         {
-            GameObject dataItem = Resources.Load("DataItem") as GameObject;
+            GameObject dataItem = Resources.Load("UI/TableItem") as GameObject;
             dataItem.GetComponent<DataItem>().NameLabel.text = info.Key;
             dataItem.GetComponent<DataItem>().NumLabel.text = info.Value.num.ToString();
             dataItem.GetComponent<DataItem>().UnitLabel.text = info.Value.unit;
+            DataGrid.gameObject.AddChild(dataItem);
         }
-        //GameObject dataItem = NGUITools.AddChild(DataGrid.gameObject, (GameObject) ());
+        DataGrid.repositionNow = true;
     }
 }

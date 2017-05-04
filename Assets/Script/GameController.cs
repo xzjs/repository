@@ -77,8 +77,10 @@ public class GameController : MonoBehaviour
                         var clone = Instantiate(g, c).transform;
                         var temp = clone.localScale.y;
                         clone.Rotate(90, 0, 0);
-                        //clone.Translate(Vector3.up * 0.5f * clone.localScale.y, Space.Self);
-                        clone.localPosition = new Vector3(0, 0, 0.2f);
+                        if (shelf.type == 0)
+                        {
+                            clone.localPosition = new Vector3(0, 0, 0.2f);
+                        }
 
                         #region 货架字典
 

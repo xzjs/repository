@@ -4,9 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Drag and Drop Root
   - Shelf
   - UI
+  - Floor
+  - Cell
   layers:
   - Default
   - TransparentFX

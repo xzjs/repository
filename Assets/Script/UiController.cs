@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Script
 {
     public class UiController : MonoBehaviour
     {
-        public UILabel PerspectiveLabel, KeyLabel;
+        public UILabel PerspectiveLabel, KeyLabel,TitleLabel;
         public UIGrid[] UiGrids;
+        public GameObject DetaillView;
 
         private Dictionary<string, GoodInfo> _dictionary;
 
@@ -17,7 +19,8 @@ namespace Assets.Script
         private Color _color;
         private Shader _shader;
         private List<GameObject> _shelves;
-        private Transform _lastClickTransform;
+        private Transform _lastClickTransform, _lastClickFloor, _lastClickCell;
+        private GameController _gameController;
 
         public void ChangePerspective()
         {
@@ -33,15 +36,30 @@ namespace Assets.Script
         /// <param name="dictionary">要显示的数据</param>
         public void ShowData(int index, Dictionary<string, GoodInfo> dictionary)
         {
-            foreach (var info in dictionary)
+            try
             {
-                GameObject dataItem = Resources.Load("UI/BigItem") as GameObject;
-                dataItem.GetComponent<DataItem>().NameLabel.text = info.Key;
-                dataItem.GetComponent<DataItem>().NumLabel.text = info.Value.num.ToString();
-                dataItem.GetComponent<DataItem>().UnitLabel.text = info.Value.unit;
-                UiGrids[index].gameObject.AddChild(dataItem);
+                foreach (var info in dictionary)
+                {
+                    GameObject dataItem;
+                    if (index < 2)
+                    {
+                        dataItem = Resources.Load("UI/BigItem") as GameObject;
+                    }
+                    else
+                    {
+                        dataItem=Resources.Load("UI/Item") as GameObject;
+                    }
+                    dataItem.GetComponent<DataItem>().NameLabel.text = info.Key;
+                    dataItem.GetComponent<DataItem>().NumLabel.text = info.Value.num.ToString();
+                    dataItem.GetComponent<DataItem>().UnitLabel.text = info.Value.unit;
+                    UiGrids[index].gameObject.AddChild(dataItem);
+                }
+                UiGrids[index].repositionNow = true;
             }
-            UiGrids[index].repositionNow = true;
+            catch (Exception exception)
+            {
+                Debug.Log(exception.ToString());
+            }
         }
 
         /// <summary>
@@ -73,6 +91,7 @@ namespace Assets.Script
         void Start()
         {
             _lastClickTransform = null;
+            _gameController = GameObject.Find("GameObejct").GetComponent<GameController>();
         }
 
         void Update()
@@ -109,9 +128,61 @@ namespace Assets.Script
                     }
                     break;
                 case "Floor":
-                    List<GameObject> gameObjects=new List<GameObject>();
+                    if (_lastClickFloor != null)
+                    {
+                        foreach (Transform cell in _lastClickFloor)
+                        {
+                            _mesh = cell.gameObject.GetComponent<MeshRenderer>();
+                            _mesh.material.shader = _shader;
+                        }
+                    }
+                    Transform floor = GameObject.Find(string.Format("Floor{0}", g.name)).transform;
+                    _lastClickFloor = floor;
+                    foreach (Transform cell in floor)
+                    {
+                        _mesh = cell.gameObject.GetComponent<MeshRenderer>();
+                        _shader = _mesh.material.shader;
+                        _mesh.material.shader = RimLightShader;
+                        _mesh.material.SetColor("_RimColor", RimColor);
+                    }
+                    ShowDetail(g.name,g.tag);
                     break;
-                    
+            }
+        }
+
+        /// <summary>
+        /// 显示详细信息面板
+        /// </summary>
+        /// <param name="floor"></param>
+        public void ShowDetail(string name,string tag)
+        {
+            DetaillView.gameObject.SetActive(true);
+            TitleLabel.text = name;
+            string[] strings = name.Split('-');
+            Shelf[] shelves = _gameController.Shelves;
+            if (tag == "floor")
+            {
+                int shelfIndex = Convert.ToInt32(strings[0]) - 1;
+                int floorIndex = Convert.ToInt32(strings[1]) - 1;
+                Cell[] cells = shelves[shelfIndex].floors[floorIndex].cells;
+                Dictionary<string, GoodInfo> dictionary = new Dictionary<string, GoodInfo>();
+                foreach (var cell in cells)
+                {
+                    Good good = cell.good;
+                    if (dictionary.ContainsKey(good.name))
+                    {
+                        dictionary[good.name].num += good.num;
+                    }
+                    else
+                    {
+                        dictionary[good.name] = new GoodInfo
+                        {
+                            num = good.num,
+                            unit = good.unit
+                        };
+                    }
+                }
+                ShowData(2, dictionary);
             }
         }
     }

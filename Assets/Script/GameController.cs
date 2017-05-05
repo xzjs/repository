@@ -2,20 +2,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using Assets.Script;
-using JetBrains.Annotations;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 
 public class GameController : MonoBehaviour
 {
-    public GameObject FpsController, MainCamera;
+    public GameObject MainCamera, FpsController;
     public Shelf[] Shelves;
     public Dictionary<string, List<GameObject>> GooDictionary;
     public TweenPosition TweenPosition;
+
+    private bool is_control = true;
     // Use this for initialization
     void Start()
     {
-        GooDictionary=new Dictionary<string, List<GameObject>>();
+        GooDictionary = new Dictionary<string, List<GameObject>>();
         StartCoroutine(GetData("http://repository.xzjs.love/api/shelfs"));
     }
 
@@ -24,29 +25,25 @@ public class GameController : MonoBehaviour
     {
         if (Input.GetKeyDown("tab"))
         {
-            ShowMenu();
+            TakeOrReleaseController();
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             TweenPosition.PlayForward();
-            ShowMenu();
+            TakeOrReleaseController();
         }
     }
 
-    public void ShowMenu()
+    /// <summary>
+    /// 取得控制
+    /// </summary>
+    /// <param name="take">是否释放控制</param>
+    public void TakeOrReleaseController()
     {
-        FirstPersonController first = FpsController.GetComponent<FirstPersonController>();
-        first.enabled = !first.enabled;
-        if (Cursor.lockState == CursorLockMode.Locked)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
+        is_control = !is_control;
+        Cursor.lockState = is_control ? CursorLockMode.Locked : CursorLockMode.None;
+        Cursor.visible = !is_control;
+        FpsController.GetComponent<FirstPersonController>().enabled = is_control;
     }
 
     /// <summary>

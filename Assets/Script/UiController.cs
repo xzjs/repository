@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.Characters.FirstPerson;
 
 namespace Assets.Script
 {
@@ -8,9 +9,14 @@ namespace Assets.Script
     {
         public UILabel PerspectiveLabel, KeyLabel, TitleLabel;
         public UIGrid[] UiGrids;
-        public GameObject DetaillView, GameController, PlanList, FpsController, MainCarema;
+        public GameObject DetaillView, PlanList;
         public UIButton ShowSimilarGoodsButton;
         public TweenPosition[] TweenPositions;
+        public FirstPersonController First;
+        public GodPerspective GodPerspective;
+        public UISlider[] Sliders;
+        public GameController GameController;
+        public UIToggle UiToggle;
 
         private Dictionary<string, GoodInfo> _dictionary;
 
@@ -161,7 +167,6 @@ namespace Assets.Script
             TweenPositions[0].PlayForward();
             TitleLabel.text = clickName;
             string[] strings = clickName.Split('-');
-            GameController gameController = GameController.GetComponent<GameController>();
             int shelfIndex = Convert.ToInt32(strings[0]) - 1;
             int floorIndex = Convert.ToInt32(strings[1]) - 1;
             Dictionary<string, GoodInfo> dictionary = new Dictionary<string, GoodInfo>();
@@ -169,7 +174,7 @@ namespace Assets.Script
             switch (clickTag)
             {
                 case "Floor":
-                    Cell[] cells = gameController.Shelves[shelfIndex].floors[floorIndex].cells;
+                    Cell[] cells = GameController.Shelves[shelfIndex].floors[floorIndex].cells;
 
                     foreach (var _cell in cells)
                     {
@@ -191,7 +196,7 @@ namespace Assets.Script
                 case "Cell":
                     ShowSimilarGoodsButton.gameObject.SetActive(true);
                     int cellIndex = Convert.ToInt32(strings[2]) - 1;
-                    Cell cell = gameController.Shelves[shelfIndex].floors[floorIndex].cells[cellIndex];
+                    Cell cell = GameController.Shelves[shelfIndex].floors[floorIndex].cells[cellIndex];
                     good = cell.good;
                     dictionary[good.name] = new GoodInfo
                     {
@@ -201,18 +206,16 @@ namespace Assets.Script
                     break;
             }
             ShowData(2, dictionary);
-            gameController.ShowMenu();
+            GameController.TakeOrReleaseController();
         }
 
         /// <summary>
         /// 关闭菜单
         /// </summary>
-        public void CloseMenu()
+        public void CloseDetail()
         {
-            //DetaillView.gameObject.SetActive(false);
             TweenPositions[0].PlayReverse();
-            GameController gameController = GameController.GetComponent<GameController>();
-            gameController.ShowMenu();
+            GameController.TakeOrReleaseController();
             if (_lastClickFloor != null)
             {
                 foreach (Transform cell in _lastClickFloor)
@@ -278,12 +281,46 @@ namespace Assets.Script
             if (PlanList.activeSelf)
             {
                 PlanList.SetActive(false);
-                GameController.GetComponent<GameController>().ShowMenu();
+                GameController.TakeOrReleaseController();
             }
             else
             {
                 PlanList.SetActive(true);
             }
+        }
+
+        /// <summary>
+        /// 修改配置
+        /// </summary>
+        public void Config()
+        {
+            First.m_WalkSpeed = Sliders[0].value * 10;
+            First.m_MouseLook.XSensitivity = Sliders[2].value * 4;
+            First.m_MouseLook.YSensitivity = Sliders[2].value * 4;
+            GodPerspective.SensitivetyMouseWheel = Sliders[1].value * 20;
+            if (UiToggle.value)
+            {
+                GameController.GetComponent<AudioSource>().Play();
+            }
+            else
+            {
+                GameController.GetComponent<AudioSource>().Stop();
+            }
+            CloseMenu();
+        }
+
+        /// <summary>
+        /// 关闭配置菜单
+        /// </summary>
+        public void CloseMenu()
+        {
+            TweenPositions[1].PlayReverse();
+            GameController.TakeOrReleaseController();
+        }
+
+        public void Close()
+        {
+            Application.Quit();
         }
     }
 }

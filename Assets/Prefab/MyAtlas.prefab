@@ -54,21 +54,21 @@ MonoBehaviour:
   material: {fileID: 2100000, guid: d568255d6729dfe47b156f0e9aebaff6, type: 2}
   mSprites:
   - name: CanClick
-    x: 306
-    y: 219
-    width: 112
-    height: 113
+    x: 881
+    y: 775
+    width: 120
+    height: 120
     borderLeft: 0
     borderRight: 0
     borderTop: 0
     borderBottom: 0
-    paddingLeft: 8
-    paddingRight: 8
-    paddingTop: 7
-    paddingBottom: 8
+    paddingLeft: 4
+    paddingRight: 4
+    paddingTop: 4
+    paddingBottom: 4
   - name: Click
-    x: 129
-    y: 116
+    x: 752
+    y: 654
     width: 120
     height: 120
     borderLeft: 0
@@ -81,9 +81,9 @@ MonoBehaviour:
     paddingBottom: 4
   - name: u10
     x: 0
-    y: 333
-    width: 583
-    height: 595
+    y: 404
+    width: 751
+    height: 620
     borderLeft: 0
     borderRight: 0
     borderTop: 0
@@ -92,9 +92,22 @@ MonoBehaviour:
     paddingRight: 0
     paddingTop: 0
     paddingBottom: 0
+  - name: u12
+    x: 881
+    y: 901
+    width: 128
+    height: 123
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 5
   - name: u168
-    x: 0
-    y: 108
+    x: 752
+    y: 896
     width: 128
     height: 128
     borderLeft: 0
@@ -107,7 +120,7 @@ MonoBehaviour:
     paddingBottom: 0
   - name: u2
     x: 0
-    y: 237
+    y: 212
     width: 305
     height: 95
     borderLeft: 0
@@ -119,8 +132,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 1
   - name: u206
-    x: 419
-    y: 222
+    x: 752
+    y: 421
     width: 86
     height: 110
     borderLeft: 0
@@ -132,8 +145,8 @@ MonoBehaviour:
     paddingTop: 9
     paddingBottom: 9
   - name: u39
-    x: 778
-    y: 1020
+    x: 0
+    y: 207
     width: 178
     height: 4
     borderLeft: 0
@@ -145,8 +158,8 @@ MonoBehaviour:
     paddingTop: 2
     paddingBottom: 3
   - name: u4
-    x: 306
-    y: 97
+    x: 752
+    y: 532
     width: 99
     height: 121
     borderLeft: 0
@@ -157,9 +170,61 @@ MonoBehaviour:
     paddingRight: 13
     paddingTop: 4
     paddingBottom: 3
+  - name: u427
+    x: 852
+    y: 553
+    width: 112
+    height: 100
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 8
+    paddingRight: 8
+    paddingTop: 14
+    paddingBottom: 14
+  - name: u431
+    x: 929
+    y: 434
+    width: 74
+    height: 118
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 27
+    paddingRight: 27
+    paddingTop: 5
+    paddingBottom: 5
+  - name: u435
+    x: 852
+    y: 424
+    width: 76
+    height: 128
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 26
+    paddingRight: 26
+    paddingTop: 0
+    paddingBottom: 0
+  - name: u437
+    x: 752
+    y: 775
+    width: 128
+    height: 120
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 3
+    paddingBottom: 5
   - name: u69
     x: 0
-    y: 929
+    y: 308
     width: 777
     height: 95
     borderLeft: 0
@@ -171,8 +236,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 1
   - name: u71
-    x: 129
-    y: 3
+    x: 873
+    y: 662
     width: 118
     height: 112
     borderLeft: 0
@@ -183,6 +248,19 @@ MonoBehaviour:
     paddingRight: 5
     paddingTop: 8
     paddingBottom: 8
+  - name: "\u5173\u95ED"
+    x: 778
+    y: 310
+    width: 93
+    height: 93
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 19
+    paddingRight: 16
+    paddingTop: 13
+    paddingBottom: 22
   mPixelSize: 1
   mReplacement: {fileID: 0}
   mCoordinates: 0

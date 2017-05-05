@@ -8,18 +8,19 @@ namespace Assets.Script
     {
         public UILabel PerspectiveLabel, KeyLabel, TitleLabel;
         public UIGrid[] UiGrids;
-        public GameObject DetaillView, GameController;
+        public GameObject DetaillView, GameController, PlanList, FpsController, MainCarema;
         public UIButton ShowSimilarGoodsButton;
+        public TweenPosition[] TweenPositions;
 
         private Dictionary<string, GoodInfo> _dictionary;
 
-        public Shader RimLightShader,StandShader;
+        public Shader RimLightShader, StandShader;
         public Color RimColor = new Color(0.2f, 0.8f, 10.6f, 1);
 
         private MeshRenderer _mesh;
         private Shader _shader;
         private Transform _lastClickTransform, _lastClickFloor;
-        private GameObject _lastClickCell,_lastClickGood;
+        private GameObject _lastClickCell, _lastClickGood;
         private List<GameObject> _showGoods;
 
         public void ChangePerspective()
@@ -95,7 +96,7 @@ namespace Assets.Script
         void Start()
         {
             _lastClickTransform = null;
-            _showGoods=new List<GameObject>();
+            _showGoods = new List<GameObject>();
         }
 
         void Update()
@@ -143,7 +144,7 @@ namespace Assets.Script
                     break;
                 case "Good":
                     _lastClickGood = g;
-                    ChangeShader(g,RimLightShader,true);
+                    ChangeShader(g, RimLightShader, true);
                     ShowDetail(g.transform.parent.name, "Cell");
                     break;
             }
@@ -156,7 +157,8 @@ namespace Assets.Script
         /// <param name="clickTag"></param>
         public void ShowDetail(string clickName, string clickTag)
         {
-            DetaillView.gameObject.SetActive(true);
+            //DetaillView.gameObject.SetActive(true);
+            TweenPositions[0].PlayForward();
             TitleLabel.text = clickName;
             string[] strings = clickName.Split('-');
             GameController gameController = GameController.GetComponent<GameController>();
@@ -207,14 +209,15 @@ namespace Assets.Script
         /// </summary>
         public void CloseMenu()
         {
-            DetaillView.gameObject.SetActive(false);
+            //DetaillView.gameObject.SetActive(false);
+            TweenPositions[0].PlayReverse();
             GameController gameController = GameController.GetComponent<GameController>();
             gameController.ShowMenu();
             if (_lastClickFloor != null)
             {
                 foreach (Transform cell in _lastClickFloor)
                 {
-                    ChangeShader(cell.gameObject,StandShader);
+                    ChangeShader(cell.gameObject, StandShader);
                 }
             }
             if (_lastClickCell != null)
@@ -246,7 +249,7 @@ namespace Assets.Script
             _showGoods = dictionary[_lastClickGood.name];
             foreach (var o in dictionary[_lastClickGood.name])
             {
-                ChangeShader(o, RimLightShader,true);
+                ChangeShader(o, RimLightShader, true);
             }
         }
 
@@ -256,7 +259,7 @@ namespace Assets.Script
         /// <param name="o"></param>
         /// <param name="shader"></param>
         /// <param name="color"></param>
-        public void ChangeShader(GameObject o, Shader shader,bool color=false)
+        public void ChangeShader(GameObject o, Shader shader, bool color = false)
         {
             _mesh = o.GetComponent<MeshRenderer>();
             Material[] materials = _mesh.materials;
@@ -267,6 +270,19 @@ namespace Assets.Script
                 {
                     material.SetColor("_RimColor", RimColor);
                 }
+            }
+        }
+
+        public void PlanListButtonClick()
+        {
+            if (PlanList.activeSelf)
+            {
+                PlanList.SetActive(false);
+                GameController.GetComponent<GameController>().ShowMenu();
+            }
+            else
+            {
+                PlanList.SetActive(true);
             }
         }
     }

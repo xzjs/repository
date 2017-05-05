@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Assets.Script;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 
@@ -10,6 +11,7 @@ public class GameController : MonoBehaviour
     public GameObject FpsController, MainCamera;
     public Shelf[] Shelves;
     public Dictionary<string, List<GameObject>> GooDictionary;
+    public TweenPosition TweenPosition;
     // Use this for initialization
     void Start()
     {
@@ -22,6 +24,11 @@ public class GameController : MonoBehaviour
     {
         if (Input.GetKeyDown("tab"))
         {
+            ShowMenu();
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TweenPosition.PlayForward();
             ShowMenu();
         }
     }

@@ -8,8 +8,8 @@ namespace Assets.Script
         public float Near = 20.0f;
         public float Far = 100.0f;
 
-        public float SensitivityX = 10f;
-        public float SensitivityY = 10f;
+        public float SensitivityX = 2f;
+        public float SensitivityY = 2f;
         public float SensitivetyZ = 2f;
         public float SensitivetyMove = 2f;
         public float SensitivetyMouseWheel = 20f;

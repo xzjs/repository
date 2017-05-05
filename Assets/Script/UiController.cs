@@ -6,9 +6,9 @@ namespace Assets.Script
 {
     public class UiController : MonoBehaviour
     {
-        public UILabel PerspectiveLabel, KeyLabel,TitleLabel;
+        public UILabel PerspectiveLabel, KeyLabel, TitleLabel;
         public UIGrid[] UiGrids;
-        public GameObject DetaillView;
+        public GameObject DetaillView, GameController;
 
         private Dictionary<string, GoodInfo> _dictionary;
 
@@ -18,9 +18,8 @@ namespace Assets.Script
         private MeshRenderer _mesh;
         private Color _color;
         private Shader _shader;
-        private List<GameObject> _shelves;
-        private Transform _lastClickTransform, _lastClickFloor, _lastClickCell;
-        private GameController _gameController;
+        private Transform _lastClickTransform, _lastClickFloor;
+        private GameObject _lastClickCell;
 
         public void ChangePerspective()
         {
@@ -38,6 +37,10 @@ namespace Assets.Script
         {
             try
             {
+                foreach (Transform cell in UiGrids[index].transform)
+                {
+                    Destroy(cell.gameObject);
+                }
                 foreach (var info in dictionary)
                 {
                     GameObject dataItem;
@@ -47,7 +50,7 @@ namespace Assets.Script
                     }
                     else
                     {
-                        dataItem=Resources.Load("UI/Item") as GameObject;
+                        dataItem = Resources.Load("UI/Item") as GameObject;
                     }
                     dataItem.GetComponent<DataItem>().NameLabel.text = info.Key;
                     dataItem.GetComponent<DataItem>().NumLabel.text = info.Value.num.ToString();
@@ -91,7 +94,6 @@ namespace Assets.Script
         void Start()
         {
             _lastClickTransform = null;
-            _gameController = GameObject.Find("GameObejct").GetComponent<GameController>();
         }
 
         void Update()
@@ -128,44 +130,47 @@ namespace Assets.Script
                     }
                     break;
                 case "Floor":
-                    if (_lastClickFloor != null)
-                    {
-                        foreach (Transform cell in _lastClickFloor)
-                        {
-                            _mesh = cell.gameObject.GetComponent<MeshRenderer>();
-                            _mesh.material.shader = _shader;
-                        }
-                    }
                     Transform floor = GameObject.Find(string.Format("Floor{0}", g.name)).transform;
                     _lastClickFloor = floor;
-                    foreach (Transform cell in floor)
+                    foreach (Transform _cell in floor)
                     {
-                        _mesh = cell.gameObject.GetComponent<MeshRenderer>();
+                        _mesh = _cell.gameObject.GetComponent<MeshRenderer>();
                         _shader = _mesh.material.shader;
                         _mesh.material.shader = RimLightShader;
                         _mesh.material.SetColor("_RimColor", RimColor);
                     }
-                    ShowDetail(g.name,g.tag);
+                    ShowDetail(g.name, g.tag);
+                    break;
+                case "Cell":
+                    GameObject cell = GameObject.Find(g.name);
+                    _lastClickCell = cell;
+                    _mesh = cell.GetComponent<MeshRenderer>();
+                    _shader = _mesh.material.shader;
+                    _mesh.material.shader = RimLightShader;
+                    _mesh.material.SetColor("_RimColor", RimColor);
+                    ShowDetail(g.name, g.tag);
                     break;
             }
         }
 
         /// <summary>
-        /// 显示详细信息面板
+        /// 显示详细信息
         /// </summary>
-        /// <param name="floor"></param>
-        public void ShowDetail(string name,string tag)
+        /// <param name="clickName"></param>
+        /// <param name="clickTag"></param>
+        public void ShowDetail(string clickName, string clickTag)
         {
             DetaillView.gameObject.SetActive(true);
-            TitleLabel.text = name;
-            string[] strings = name.Split('-');
-            Shelf[] shelves = _gameController.Shelves;
-            if (tag == "floor")
+            TitleLabel.text = clickName;
+            string[] strings = clickName.Split('-');
+            GameController gameController = GameController.GetComponent<GameController>();
+            int shelfIndex = Convert.ToInt32(strings[0]) - 1;
+            int floorIndex = Convert.ToInt32(strings[1]) - 1;
+            Dictionary<string, GoodInfo> dictionary = new Dictionary<string, GoodInfo>();
+            if (clickTag == "Floor")
             {
-                int shelfIndex = Convert.ToInt32(strings[0]) - 1;
-                int floorIndex = Convert.ToInt32(strings[1]) - 1;
-                Cell[] cells = shelves[shelfIndex].floors[floorIndex].cells;
-                Dictionary<string, GoodInfo> dictionary = new Dictionary<string, GoodInfo>();
+                Cell[] cells = gameController.Shelves[shelfIndex].floors[floorIndex].cells;
+
                 foreach (var cell in cells)
                 {
                     Good good = cell.good;
@@ -182,7 +187,43 @@ namespace Assets.Script
                         };
                     }
                 }
-                ShowData(2, dictionary);
+
+            }
+            else if (clickTag == "Cell")
+            {
+                int cellIndex = Convert.ToInt32(strings[2]) - 1;
+                Cell cell = gameController.Shelves[shelfIndex].floors[floorIndex].cells[cellIndex];
+                Good good = cell.good;
+                dictionary[good.name] = new GoodInfo
+                {
+                    num = good.num,
+                    unit = good.unit
+                };
+            }
+            ShowData(2, dictionary);
+            gameController.ShowMenu();
+        }
+
+        /// <summary>
+        /// 关闭菜单
+        /// </summary>
+        public void CloseMenu()
+        {
+            DetaillView.gameObject.SetActive(false);
+            GameController gameController = GameController.GetComponent<GameController>();
+            gameController.ShowMenu();
+            if (_lastClickFloor != null)
+            {
+                foreach (Transform cell in _lastClickFloor)
+                {
+                    _mesh = cell.gameObject.GetComponent<MeshRenderer>();
+                    _mesh.material.shader = _shader;
+                }
+            }
+            if (_lastClickCell != null)
+            {
+                _mesh = _lastClickCell.GetComponent<MeshRenderer>();
+                _mesh.material.shader = _shader;
             }
         }
     }

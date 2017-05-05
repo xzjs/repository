@@ -9,9 +9,11 @@ public class GameController : MonoBehaviour
 {
     public GameObject FpsController, MainCamera;
     public Shelf[] Shelves;
+    public Dictionary<string, List<GameObject>> GooDictionary;
     // Use this for initialization
     void Start()
     {
+        GooDictionary=new Dictionary<string, List<GameObject>>();
         StartCoroutine(GetData("http://repository.xzjs.love/api/shelfs"));
     }
 
@@ -86,6 +88,17 @@ public class GameController : MonoBehaviour
                             GameObject g = Resources.Load("Goods/" + good.model_name) as GameObject;
                             var c = GameObject.Find(string.Format("{0}-{1}-{2}", shelf.no, floor.no, cell.no)).transform;
                             var clone = Instantiate(g, c).transform;
+                            if (GooDictionary.ContainsKey(clone.name))
+                            {
+                                GooDictionary[clone.name].Add(clone.gameObject);
+                            }
+                            else
+                            {
+                                GooDictionary[clone.name] = new List<GameObject>
+                                {
+                                    clone.gameObject
+                                };
+                            }
                             var temp = clone.localScale.y;
                             clone.Rotate(90, 0, 0);
                             if (shelf.type == 0)

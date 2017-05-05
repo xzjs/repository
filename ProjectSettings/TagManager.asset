@@ -8,6 +8,7 @@ TagManager:
   - UI
   - Floor
   - Cell
+  - Good
   layers:
   - Default
   - TransparentFX

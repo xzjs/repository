@@ -9,17 +9,18 @@ namespace Assets.Script
         public UILabel PerspectiveLabel, KeyLabel, TitleLabel;
         public UIGrid[] UiGrids;
         public GameObject DetaillView, GameController;
+        public UIButton ShowSimilarGoodsButton;
 
         private Dictionary<string, GoodInfo> _dictionary;
 
-        public Shader RimLightShader;
+        public Shader RimLightShader,StandShader;
         public Color RimColor = new Color(0.2f, 0.8f, 10.6f, 1);
 
         private MeshRenderer _mesh;
-        private Color _color;
         private Shader _shader;
         private Transform _lastClickTransform, _lastClickFloor;
-        private GameObject _lastClickCell;
+        private GameObject _lastClickCell,_lastClickGood;
+        private List<GameObject> _showGoods;
 
         public void ChangePerspective()
         {
@@ -94,6 +95,7 @@ namespace Assets.Script
         void Start()
         {
             _lastClickTransform = null;
+            _showGoods=new List<GameObject>();
         }
 
         void Update()
@@ -109,24 +111,19 @@ namespace Assets.Script
             switch (g.tag)
             {
                 case "Shelf":
+                    //清除之前的shader
                     if (_lastClickTransform != null)
                     {
                         foreach (Transform childTransform in _lastClickTransform)
                         {
-                            _mesh = childTransform.gameObject.GetComponentInChildren<MeshRenderer>();
-                            _mesh.material.shader = _shader;
+                            ChangeShader(childTransform.gameObject, StandShader);
                         }
                     }
                     Transform shelf = GameObject.Find(string.Format("Shelf{0}", g.name)).transform;
                     _lastClickTransform = shelf;
                     foreach (Transform childTransform in shelf)
                     {
-                        _mesh = childTransform.gameObject.GetComponentInChildren<MeshRenderer>();
-
-                        _shader = _mesh.material.shader;
-
-                        _mesh.material.shader = RimLightShader;
-                        _mesh.material.SetColor("_RimColor", RimColor);
+                        ChangeShader(childTransform.gameObject, RimLightShader, true);
                     }
                     break;
                 case "Floor":
@@ -134,21 +131,20 @@ namespace Assets.Script
                     _lastClickFloor = floor;
                     foreach (Transform _cell in floor)
                     {
-                        _mesh = _cell.gameObject.GetComponent<MeshRenderer>();
-                        _shader = _mesh.material.shader;
-                        _mesh.material.shader = RimLightShader;
-                        _mesh.material.SetColor("_RimColor", RimColor);
+                        ChangeShader(_cell.gameObject, RimLightShader, true);
                     }
                     ShowDetail(g.name, g.tag);
                     break;
                 case "Cell":
                     GameObject cell = GameObject.Find(g.name);
                     _lastClickCell = cell;
-                    _mesh = cell.GetComponent<MeshRenderer>();
-                    _shader = _mesh.material.shader;
-                    _mesh.material.shader = RimLightShader;
-                    _mesh.material.SetColor("_RimColor", RimColor);
+                    ChangeShader(cell, RimLightShader, true);
                     ShowDetail(g.name, g.tag);
+                    break;
+                case "Good":
+                    _lastClickGood = g;
+                    ChangeShader(g,RimLightShader,true);
+                    ShowDetail(g.transform.parent.name, "Cell");
                     break;
             }
         }
@@ -167,38 +163,40 @@ namespace Assets.Script
             int shelfIndex = Convert.ToInt32(strings[0]) - 1;
             int floorIndex = Convert.ToInt32(strings[1]) - 1;
             Dictionary<string, GoodInfo> dictionary = new Dictionary<string, GoodInfo>();
-            if (clickTag == "Floor")
+            Good good;
+            switch (clickTag)
             {
-                Cell[] cells = gameController.Shelves[shelfIndex].floors[floorIndex].cells;
+                case "Floor":
+                    Cell[] cells = gameController.Shelves[shelfIndex].floors[floorIndex].cells;
 
-                foreach (var cell in cells)
-                {
-                    Good good = cell.good;
-                    if (dictionary.ContainsKey(good.name))
+                    foreach (var _cell in cells)
                     {
-                        dictionary[good.name].num += good.num;
-                    }
-                    else
-                    {
-                        dictionary[good.name] = new GoodInfo
+                        good = _cell.good;
+                        if (dictionary.ContainsKey(good.name))
                         {
-                            num = good.num,
-                            unit = good.unit
-                        };
+                            dictionary[good.name].num += good.num;
+                        }
+                        else
+                        {
+                            dictionary[good.name] = new GoodInfo
+                            {
+                                num = good.num,
+                                unit = good.unit
+                            };
+                        }
                     }
-                }
-
-            }
-            else if (clickTag == "Cell")
-            {
-                int cellIndex = Convert.ToInt32(strings[2]) - 1;
-                Cell cell = gameController.Shelves[shelfIndex].floors[floorIndex].cells[cellIndex];
-                Good good = cell.good;
-                dictionary[good.name] = new GoodInfo
-                {
-                    num = good.num,
-                    unit = good.unit
-                };
+                    break;
+                case "Cell":
+                    ShowSimilarGoodsButton.gameObject.SetActive(true);
+                    int cellIndex = Convert.ToInt32(strings[2]) - 1;
+                    Cell cell = gameController.Shelves[shelfIndex].floors[floorIndex].cells[cellIndex];
+                    good = cell.good;
+                    dictionary[good.name] = new GoodInfo
+                    {
+                        num = good.num,
+                        unit = good.unit
+                    };
+                    break;
             }
             ShowData(2, dictionary);
             gameController.ShowMenu();
@@ -216,14 +214,59 @@ namespace Assets.Script
             {
                 foreach (Transform cell in _lastClickFloor)
                 {
-                    _mesh = cell.gameObject.GetComponent<MeshRenderer>();
-                    _mesh.material.shader = _shader;
+                    ChangeShader(cell.gameObject,StandShader);
                 }
             }
             if (_lastClickCell != null)
             {
-                _mesh = _lastClickCell.GetComponent<MeshRenderer>();
-                _mesh.material.shader = _shader;
+                ChangeShader(_lastClickCell, StandShader);
+            }
+            if (_lastClickGood != null)
+            {
+                ChangeShader(_lastClickGood.gameObject, StandShader);
+            }
+            if (ShowSimilarGoodsButton.gameObject.activeSelf)
+            {
+                ShowSimilarGoodsButton.gameObject.SetActive(false);
+            }
+        }
+
+        public void ShowSimilarGood()
+        {
+            if (_showGoods.Count > 0)
+            {
+                foreach (var good in _showGoods)
+                {
+                    ChangeShader(good, StandShader);
+                }
+            }
+            Dictionary<string, List<GameObject>> dictionary =
+                GameController.GetComponent<GameController>().GooDictionary;
+            if (!dictionary.ContainsKey(_lastClickGood.name)) return;
+            _showGoods = dictionary[_lastClickGood.name];
+            foreach (var o in dictionary[_lastClickGood.name])
+            {
+                ChangeShader(o, RimLightShader,true);
+            }
+        }
+
+        /// <summary>
+        /// 变更shader
+        /// </summary>
+        /// <param name="o"></param>
+        /// <param name="shader"></param>
+        /// <param name="color"></param>
+        public void ChangeShader(GameObject o, Shader shader,bool color=false)
+        {
+            _mesh = o.GetComponent<MeshRenderer>();
+            Material[] materials = _mesh.materials;
+            foreach (var material in materials)
+            {
+                material.shader = shader;
+                if (color)
+                {
+                    material.SetColor("_RimColor", RimColor);
+                }
             }
         }
     }

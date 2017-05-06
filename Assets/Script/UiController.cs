@@ -17,6 +17,7 @@ namespace Assets.Script
         public UISlider[] Sliders;
         public GameController GameController;
         public UIToggle UiToggle;
+        public UISprite FrontSight;
 
         private Dictionary<string, GoodInfo> _dictionary;
 
@@ -107,52 +108,60 @@ namespace Assets.Script
 
         void Update()
         {
-            if (!Input.GetButtonDown("Fire1")) return;
             if (UICamera.Raycast(Input.mousePosition)) return;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (!Physics.Raycast(ray, out hit)) return;
             GameObject g = hit.transform.gameObject;
-            Debug.Log(g.name);
-            Debug.Log(g.tag);
-            switch (g.tag)
+            if (g.tag != "Shelf" && g.tag != "Floor" && g.tag != "Cell" && g.tag != "Good")
             {
-                case "Shelf":
-                    //清除之前的shader
-                    if (_lastClickTransform != null)
-                    {
-                        foreach (Transform childTransform in _lastClickTransform)
+                FrontSight.spriteName = "Click";
+            }
+            else
+            {
+                FrontSight.spriteName = "CanClick";
+                if (!Input.GetButtonDown("Fire1")) return;
+                Debug.Log(g.name);
+                Debug.Log(g.tag);
+                switch (g.tag)
+                {
+                    case "Shelf":
+                        //清除之前的shader
+                        if (_lastClickTransform != null)
                         {
-                            ChangeShader(childTransform.gameObject, StandShader);
+                            foreach (Transform childTransform in _lastClickTransform)
+                            {
+                                ChangeShader(childTransform.gameObject, StandShader);
+                            }
                         }
-                    }
-                    Transform shelf = GameObject.Find(string.Format("Shelf{0}", g.name)).transform;
-                    _lastClickTransform = shelf;
-                    foreach (Transform childTransform in shelf)
-                    {
-                        ChangeShader(childTransform.gameObject, RimLightShader, true);
-                    }
-                    break;
-                case "Floor":
-                    Transform floor = GameObject.Find(string.Format("Floor{0}", g.name)).transform;
-                    _lastClickFloor = floor;
-                    foreach (Transform _cell in floor)
-                    {
-                        ChangeShader(_cell.gameObject, RimLightShader, true);
-                    }
-                    ShowDetail(g.name, g.tag);
-                    break;
-                case "Cell":
-                    GameObject cell = GameObject.Find(g.name);
-                    _lastClickCell = cell;
-                    ChangeShader(cell, RimLightShader, true);
-                    ShowDetail(g.name, g.tag);
-                    break;
-                case "Good":
-                    _lastClickGood = g;
-                    ChangeShader(g, RimLightShader, true);
-                    ShowDetail(g.transform.parent.name, "Cell");
-                    break;
+                        Transform shelf = GameObject.Find(string.Format("Shelf{0}", g.name)).transform;
+                        _lastClickTransform = shelf;
+                        foreach (Transform childTransform in shelf)
+                        {
+                            ChangeShader(childTransform.gameObject, RimLightShader, true);
+                        }
+                        break;
+                    case "Floor":
+                        Transform floor = GameObject.Find(string.Format("Floor{0}", g.name)).transform;
+                        _lastClickFloor = floor;
+                        foreach (Transform _cell in floor)
+                        {
+                            ChangeShader(_cell.gameObject, RimLightShader, true);
+                        }
+                        ShowDetail(g.name, g.tag);
+                        break;
+                    case "Cell":
+                        GameObject cell = GameObject.Find(g.name);
+                        _lastClickCell = cell;
+                        ChangeShader(cell, RimLightShader, true);
+                        ShowDetail(g.name, g.tag);
+                        break;
+                    case "Good":
+                        _lastClickGood = g;
+                        ChangeShader(g, RimLightShader, true);
+                        ShowDetail(g.transform.parent.name, "Cell");
+                        break;
+                }
             }
         }
 
@@ -265,6 +274,7 @@ namespace Assets.Script
         public void ChangeShader(GameObject o, Shader shader, bool color = false)
         {
             _mesh = o.GetComponent<MeshRenderer>();
+            if (_mesh == null) return;
             Material[] materials = _mesh.materials;
             foreach (var material in materials)
             {

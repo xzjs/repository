@@ -19,7 +19,7 @@ namespace Assets.Script
         public UIToggle UiToggle;
         public UISprite FrontSight;
 
-        private Dictionary<string, GoodInfo> _dictionary;
+        private Dictionary<string, Good> _dictionary;
 
         public Shader RimLightShader, StandShader;
         public Color RimColor = new Color(0.2f, 0.8f, 10.6f, 1);
@@ -42,7 +42,7 @@ namespace Assets.Script
         /// </summary>
         /// <param name="index">显示表格序号</param>
         /// <param name="dictionary">要显示的数据</param>
-        public void ShowData(int index, Dictionary<string, GoodInfo> dictionary)
+        public void ShowData(int index, Dictionary<string, Good> dictionary)
         {
             try
             {
@@ -61,9 +61,7 @@ namespace Assets.Script
                     {
                         dataItem = Resources.Load("UI/Item") as GameObject;
                     }
-                    dataItem.GetComponent<DataItem>().NameLabel.text = info.Key;
-                    dataItem.GetComponent<DataItem>().NumLabel.text = info.Value.num.ToString();
-                    dataItem.GetComponent<DataItem>().UnitLabel.text = info.Value.unit;
+                    dataItem.GetComponent<DataItem>().SetGood(info.Value);
                     UiGrids[index].gameObject.AddChild(dataItem);
                 }
                 UiGrids[index].repositionNow = true;
@@ -79,7 +77,7 @@ namespace Assets.Script
         /// </summary>
         public void Search()
         {
-            Dictionary<string, GoodInfo> dictionary = new Dictionary<string, GoodInfo>();
+            Dictionary<string, Good> dictionary = new Dictionary<string, Good>();
             foreach (var info in _dictionary)
             {
                 if (info.Key.Contains(KeyLabel.text))
@@ -94,7 +92,7 @@ namespace Assets.Script
         /// 设置数据
         /// </summary>
         /// <param name="dictionary">数据</param>
-        public void SetData(Dictionary<string, GoodInfo> dictionary)
+        public void SetData(Dictionary<string, Good> dictionary)
         {
             _dictionary = dictionary;
             ShowData(0, dictionary);
@@ -111,29 +109,81 @@ namespace Assets.Script
             if (UICamera.Raycast(Input.mousePosition)) return;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (!Physics.Raycast(ray, out hit)) return;
-            GameObject g = hit.transform.gameObject;
-            if (g.tag != "Shelf" && g.tag != "Floor" && g.tag != "Cell" && g.tag != "Good")
+
+            #region 更换准星图标
+
+            if (Physics.Raycast(ray, out hit))
             {
-                FrontSight.spriteName = "Click";
+                GameObject g = hit.transform.gameObject;
+                if (g.tag == "Shelf" || g.tag == "Floor" || g.tag == "Cell" || g.tag == "Good")
+                {
+                    if (FrontSight.spriteName != "CanClick")
+                    {
+                        FrontSight.spriteName = "CanClick";
+                    }
+                }
+                else
+                {
+                    if (FrontSight.spriteName != "Click")
+                    {
+                        FrontSight.spriteName = "Click";
+                    }
+                }
             }
             else
             {
-                FrontSight.spriteName = "CanClick";
-                if (!Input.GetButtonDown("Fire1")) return;
+                if (FrontSight.spriteName != "Click")
+                {
+                    FrontSight.spriteName = "Click";
+                }
+            }
+
+            #endregion
+
+            if (!Input.GetButtonDown("Fire1")) return;
+
+            #region 取消高亮
+
+            if (_lastClickTransform != null)
+            {
+                foreach (Transform childTransform in _lastClickTransform)
+                {
+                    ChangeShader(childTransform.gameObject, StandShader);
+                }
+            }
+            if (_lastClickFloor != null)
+            {
+                foreach (Transform cell in _lastClickFloor)
+                {
+                    ChangeShader(cell.gameObject, StandShader);
+                }
+            }
+            if (_lastClickCell != null)
+            {
+                ChangeShader(_lastClickCell, StandShader);
+            }
+            if (_lastClickGood != null)
+            {
+                ChangeShader(_lastClickGood.gameObject, StandShader);
+            }
+            if (_showGoods.Count > 0)
+            {
+                foreach (var good in _showGoods)
+                {
+                    ChangeShader(good, StandShader);
+                }
+            }
+
+            #endregion
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                GameObject g = hit.transform.gameObject;
                 Debug.Log(g.name);
                 Debug.Log(g.tag);
                 switch (g.tag)
                 {
                     case "Shelf":
-                        //清除之前的shader
-                        if (_lastClickTransform != null)
-                        {
-                            foreach (Transform childTransform in _lastClickTransform)
-                            {
-                                ChangeShader(childTransform.gameObject, StandShader);
-                            }
-                        }
                         Transform shelf = GameObject.Find(string.Format("Shelf{0}", g.name)).transform;
                         _lastClickTransform = shelf;
                         foreach (Transform childTransform in shelf)
@@ -172,13 +222,12 @@ namespace Assets.Script
         /// <param name="clickTag"></param>
         public void ShowDetail(string clickName, string clickTag)
         {
-            //DetaillView.gameObject.SetActive(true);
             TweenPositions[0].PlayForward();
             TitleLabel.text = clickName;
             string[] strings = clickName.Split('-');
             int shelfIndex = Convert.ToInt32(strings[0]) - 1;
             int floorIndex = Convert.ToInt32(strings[1]) - 1;
-            Dictionary<string, GoodInfo> dictionary = new Dictionary<string, GoodInfo>();
+            Dictionary<string, Good> dictionary = new Dictionary<string, Good>();
             Good good;
             switch (clickTag)
             {
@@ -194,9 +243,11 @@ namespace Assets.Script
                         }
                         else
                         {
-                            dictionary[good.name] = new GoodInfo
+                            dictionary[good.name] = new Good
                             {
-                                num = good.num,
+                                id = 0,
+                                name = good.name,
+                                model_name = good.model_name,
                                 unit = good.unit
                             };
                         }
@@ -207,11 +258,7 @@ namespace Assets.Script
                     int cellIndex = Convert.ToInt32(strings[2]) - 1;
                     Cell cell = GameController.Shelves[shelfIndex].floors[floorIndex].cells[cellIndex];
                     good = cell.good;
-                    dictionary[good.name] = new GoodInfo
-                    {
-                        num = good.num,
-                        unit = good.unit
-                    };
+                    dictionary[good.name] = good;
                     break;
             }
             ShowData(2, dictionary);
@@ -225,41 +272,26 @@ namespace Assets.Script
         {
             TweenPositions[0].PlayReverse();
             GameController.TakeOrReleaseController();
-            if (_lastClickFloor != null)
-            {
-                foreach (Transform cell in _lastClickFloor)
-                {
-                    ChangeShader(cell.gameObject, StandShader);
-                }
-            }
-            if (_lastClickCell != null)
-            {
-                ChangeShader(_lastClickCell, StandShader);
-            }
-            if (_lastClickGood != null)
-            {
-                ChangeShader(_lastClickGood.gameObject, StandShader);
-            }
             if (ShowSimilarGoodsButton.gameObject.activeSelf)
             {
                 ShowSimilarGoodsButton.gameObject.SetActive(false);
             }
         }
 
-        public void ShowSimilarGood()
+        /// <summary>
+        /// 显示同类货物
+        /// </summary>
+        /// <param name="goodName">货物名称</param>
+        public void ShowSimilarGood(string goodName=null)
         {
-            if (_showGoods.Count > 0)
+            if (goodName == null)
             {
-                foreach (var good in _showGoods)
-                {
-                    ChangeShader(good, StandShader);
-                }
+                goodName = _lastClickGood.name;
             }
-            Dictionary<string, List<GameObject>> dictionary =
-                GameController.GetComponent<GameController>().GooDictionary;
-            if (!dictionary.ContainsKey(_lastClickGood.name)) return;
-            _showGoods = dictionary[_lastClickGood.name];
-            foreach (var o in dictionary[_lastClickGood.name])
+            Dictionary<string, List<GameObject>> dictionary = GameController.GetComponent<GameController>().GooDictionary;
+            if (!dictionary.ContainsKey(goodName)) return;
+            _showGoods = dictionary[goodName];
+            foreach (var o in dictionary[goodName])
             {
                 ChangeShader(o, RimLightShader, true);
             }
@@ -328,6 +360,9 @@ namespace Assets.Script
             GameController.TakeOrReleaseController();
         }
 
+        /// <summary>
+        /// 退出游戏
+        /// </summary>
         public void Close()
         {
             Application.Quit();

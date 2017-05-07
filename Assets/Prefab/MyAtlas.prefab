@@ -67,7 +67,7 @@ MonoBehaviour:
     paddingTop: 4
     paddingBottom: 4
   - name: Click
-    x: 752
+    x: 873
     y: 654
     width: 120
     height: 120
@@ -79,9 +79,22 @@ MonoBehaviour:
     paddingRight: 4
     paddingTop: 4
     paddingBottom: 4
+  - name: close
+    x: 752
+    y: 652
+    width: 120
+    height: 122
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 4
+    paddingRight: 4
+    paddingTop: 3
+    paddingBottom: 3
   - name: look
-    x: 852
-    y: 540
+    x: 871
+    y: 538
     width: 106
     height: 113
     borderLeft: 0
@@ -97,6 +110,19 @@ MonoBehaviour:
     y: 404
     width: 751
     height: 620
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: u112
+    x: 778
+    y: 348
+    width: 230
+    height: 55
     borderLeft: 0
     borderRight: 0
     borderTop: 0
@@ -145,8 +171,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 1
   - name: u206
-    x: 752
-    y: 421
+    x: 77
+    y: 101
     width: 86
     height: 110
     borderLeft: 0
@@ -157,22 +183,9 @@ MonoBehaviour:
     paddingRight: 21
     paddingTop: 9
     paddingBottom: 9
-  - name: u295
-    x: 852
-    y: 427
-    width: 104
-    height: 112
-    borderLeft: 0
-    borderRight: 0
-    borderTop: 0
-    borderBottom: 0
-    paddingLeft: 12
-    paddingRight: 12
-    paddingTop: 8
-    paddingBottom: 8
   - name: u39
-    x: 306
-    y: 303
+    x: 778
+    y: 343
     width: 178
     height: 4
     borderLeft: 0
@@ -185,7 +198,7 @@ MonoBehaviour:
     paddingBottom: 3
   - name: u4
     x: 752
-    y: 532
+    y: 417
     width: 99
     height: 121
     borderLeft: 0
@@ -197,8 +210,8 @@ MonoBehaviour:
     paddingTop: 4
     paddingBottom: 3
   - name: u427
-    x: 0
-    y: 111
+    x: 871
+    y: 437
     width: 112
     height: 100
     borderLeft: 0
@@ -210,7 +223,7 @@ MonoBehaviour:
     paddingTop: 14
     paddingBottom: 14
   - name: u431
-    x: 190
+    x: 164
     y: 93
     width: 74
     height: 118
@@ -223,7 +236,7 @@ MonoBehaviour:
     paddingTop: 5
     paddingBottom: 5
   - name: u435
-    x: 113
+    x: 0
     y: 83
     width: 76
     height: 128
@@ -262,8 +275,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 1
   - name: u71
-    x: 873
-    y: 662
+    x: 752
+    y: 539
     width: 118
     height: 112
     borderLeft: 0
@@ -275,8 +288,8 @@ MonoBehaviour:
     paddingTop: 8
     paddingBottom: 8
   - name: "\u5173\u95ED"
-    x: 778
-    y: 310
+    x: 306
+    y: 214
     width: 93
     height: 93
     borderLeft: 0

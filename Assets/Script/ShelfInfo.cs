@@ -73,9 +73,16 @@ namespace Assets.Script
         }
     }
 
-    public class GoodInfo
+    /// <summary>
+    /// 记录类
+    /// </summary>
+    public class Record
     {
-        public int num;
+        public int id;
+        public string name;
+        public string action;
+        public string time;
+        public string num;
         public string unit;
     }
 }

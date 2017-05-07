@@ -79,10 +79,10 @@ public class GameController : MonoBehaviour
                 //Debug.Log(getData.text);
                 var shelfs = JsonHelper.FromJson<Shelf>("{\"Items\":" + getData.text + "}");
                 Shelves = shelfs;
-                Dictionary<string, GoodInfo> totalDictionary = new Dictionary<string, GoodInfo>();
+                Dictionary<string, Good> totalDictionary = new Dictionary<string, Good>();
                 foreach (var shelf in shelfs)
                 {
-                    Dictionary<string, GoodInfo> dictionary = new Dictionary<string, GoodInfo>();
+                    Dictionary<string, Good> dictionary = new Dictionary<string, Good>();
                     foreach (var floor in shelf.floors)
                     {
                         foreach (var cell in floor.cells)
@@ -103,7 +103,6 @@ public class GameController : MonoBehaviour
                                     clone.gameObject
                                 };
                             }
-                            var temp = clone.localScale.y;
                             clone.Rotate(90, 0, 0);
                             if (shelf.type == 0)
                             {
@@ -118,10 +117,13 @@ public class GameController : MonoBehaviour
                             }
                             else
                             {
-                                dictionary[good.name] = new GoodInfo
+                                dictionary[good.name] = new Good
                                 {
-                                    num = good.num,
-                                    unit = good.unit
+                                    id = 0,
+                                    name = good.name,
+                                    model_name = good.model_name,
+                                    unit = good.unit,
+                                    num = good.num
                                 };
                             }
 
@@ -135,10 +137,13 @@ public class GameController : MonoBehaviour
                             }
                             else
                             {
-                                totalDictionary[good.name] = new GoodInfo
+                                totalDictionary[good.name] = new Good
                                 {
-                                    num = good.num,
-                                    unit = good.unit
+                                    id = 0,
+                                    name = good.name,
+                                    model_name = good.model_name,
+                                    unit = good.unit,
+                                    num = good.num
                                 };
                             }
 
@@ -159,6 +164,5 @@ public class GameController : MonoBehaviour
         {
             Debug.Log(exception.ToString());
         }
-
     }
 }

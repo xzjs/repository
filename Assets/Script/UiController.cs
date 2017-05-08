@@ -254,7 +254,10 @@ namespace Assets.Script
                     }
                     break;
                 case "Cell":
-                    ShowSimilarGoodsButton.gameObject.SetActive(true);
+                    if (_lastClickGood != null)
+                    {
+                        ShowSimilarGoodsButton.gameObject.SetActive(true);
+                    }
                     int cellIndex = Convert.ToInt32(strings[2]) - 1;
                     Cell cell = GameController.Shelves[shelfIndex].floors[floorIndex].cells[cellIndex];
                     good = cell.good;

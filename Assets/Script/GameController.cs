@@ -11,12 +11,14 @@ public class GameController : MonoBehaviour
     public Shelf[] Shelves;
     public Dictionary<string, List<GameObject>> GooDictionary;
     public TweenPosition TweenPosition;
+    public Dictionary<string, Good> TotalDictionary;
 
     private bool is_control = true;
     // Use this for initialization
     void Start()
     {
         GooDictionary = new Dictionary<string, List<GameObject>>();
+        TotalDictionary=new Dictionary<string, Good>();
         StartCoroutine(GetData("http://repository.xzjs.love/api/shelfs"));
     }
 
@@ -79,7 +81,6 @@ public class GameController : MonoBehaviour
                 //Debug.Log(getData.text);
                 var shelfs = JsonHelper.FromJson<Shelf>("{\"Items\":" + getData.text + "}");
                 Shelves = shelfs;
-                Dictionary<string, Good> totalDictionary = new Dictionary<string, Good>();
                 foreach (var shelf in shelfs)
                 {
                     Dictionary<string, Good> dictionary = new Dictionary<string, Good>();
@@ -131,13 +132,13 @@ public class GameController : MonoBehaviour
 
                             #region 总字典
 
-                            if (totalDictionary.ContainsKey(good.name))
+                            if (TotalDictionary.ContainsKey(good.name))
                             {
-                                totalDictionary[good.name].num += good.num;
+                                TotalDictionary[good.name].num += good.num;
                             }
                             else
                             {
-                                totalDictionary[good.name] = new Good
+                                TotalDictionary[good.name] = new Good
                                 {
                                     id = 0,
                                     name = good.name,
@@ -157,7 +158,7 @@ public class GameController : MonoBehaviour
                     shelfUiController.ShelfNoLabel.text = shelf.no.ToString();
                 }
                 UiController uiController = GameObject.FindGameObjectWithTag("UI").GetComponentInChildren<UiController>();
-                uiController.SetData(totalDictionary);
+                uiController.SetData(TotalDictionary);
             }
         }
         catch (Exception exception)

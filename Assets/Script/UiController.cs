@@ -9,8 +9,7 @@ namespace Assets.Script
     {
         public UILabel PerspectiveLabel, KeyLabel, TitleLabel;
         public UIGrid[] UiGrids;
-        public GameObject DetaillView, PlanList;
-        public UIButton ShowSimilarGoodsButton;
+        public GameObject DetaillView, PlanList, ShowSimilar;
         public TweenPosition[] TweenPositions;
         public FirstPersonController First;
         public GodPerspective GodPerspective;
@@ -18,6 +17,7 @@ namespace Assets.Script
         public GameController GameController;
         public UIToggle UiToggle;
         public UISprite FrontSight;
+        public Detail Detail;
 
         private Dictionary<string, Good> _dictionary;
 
@@ -256,12 +256,13 @@ namespace Assets.Script
                 case "Cell":
                     if (_lastClickGood != null)
                     {
-                        ShowSimilarGoodsButton.gameObject.SetActive(true);
+                        ShowSimilar.SetActive(true);
                     }
                     int cellIndex = Convert.ToInt32(strings[2]) - 1;
                     Cell cell = GameController.Shelves[shelfIndex].floors[floorIndex].cells[cellIndex];
                     good = cell.good;
                     dictionary[good.name] = good;
+                    Detail.SetData(good);
                     break;
             }
             ShowData(2, dictionary);
@@ -275,9 +276,9 @@ namespace Assets.Script
         {
             TweenPositions[0].PlayReverse();
             GameController.TakeOrReleaseController();
-            if (ShowSimilarGoodsButton.gameObject.activeSelf)
+            if (ShowSimilar.activeSelf)
             {
-                ShowSimilarGoodsButton.gameObject.SetActive(false);
+                ShowSimilar.SetActive(false);
             }
         }
 

@@ -13,6 +13,20 @@ namespace Assets.Script
         {
             UiController uiController = GameObject.Find("UI Root").GetComponent<UiController>();
             uiController.ShowSimilarGood(string.Format("{0}(Clone)", GoodName));
+            RecordList recordList = GameObject.Find("RecordList").GetComponent<RecordList>();
+            GameObject record=Resources.Load("UI/RecordItem") as GameObject;
+            record.GetComponent<RecordItem>().SetData(new Record
+            {
+                name = NameLabel.text,
+                num=NumLabel.text,
+                unit = UnitLabel.text,
+                action = "入库",
+                time = "2017-5-8 10:06:59"
+            });
+            recordList.Grid.gameObject.AddChild(record);
+            recordList.Grid.repositionNow = true;
+            recordList.TotaLabel.text = string.Format("现库存：{0}{1}", NumLabel.text, UnitLabel.text);
+            recordList.TweenPosition.PlayForward();
         }
 
         /// <summary>

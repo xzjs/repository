@@ -12,8 +12,13 @@ namespace Assets.Script
         public void Click()
         {
             UiController uiController = GameObject.Find("UI Root").GetComponent<UiController>();
+            uiController.CancelHighlight();
             uiController.ShowSimilarGood(string.Format("{0}(Clone)", GoodName));
             RecordList recordList = GameObject.Find("RecordList").GetComponent<RecordList>();
+            foreach (Transform cell in recordList.Grid.transform)
+            {
+                Destroy(cell.gameObject);
+            }
             GameObject record=Resources.Load("UI/RecordItem") as GameObject;
             record.GetComponent<RecordItem>().SetData(new Record
             {

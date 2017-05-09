@@ -23,6 +23,10 @@ namespace Assets.Script
         public void Close()
         {
             TweenPosition.PlayReverse();
+            foreach (Transform cell in Grid.transform)
+            {
+                Destroy(cell.gameObject);
+            }
         }
     }
 }

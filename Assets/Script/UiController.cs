@@ -141,41 +141,7 @@ namespace Assets.Script
             #endregion
 
             if (!Input.GetButtonDown("Fire1")) return;
-
-            #region 取消高亮
-
-            if (_lastClickTransform != null)
-            {
-                foreach (Transform childTransform in _lastClickTransform)
-                {
-                    ChangeShader(childTransform.gameObject, StandShader);
-                }
-            }
-            if (_lastClickFloor != null)
-            {
-                foreach (Transform cell in _lastClickFloor)
-                {
-                    ChangeShader(cell.gameObject, StandShader);
-                }
-            }
-            if (_lastClickCell != null)
-            {
-                ChangeShader(_lastClickCell, StandShader);
-            }
-            if (_lastClickGood != null)
-            {
-                ChangeShader(_lastClickGood.gameObject, StandShader);
-            }
-            if (_showGoods.Count > 0)
-            {
-                foreach (var good in _showGoods)
-                {
-                    ChangeShader(good, StandShader);
-                }
-            }
-
-            #endregion
-
+            CancelHighlight();
             if (Physics.Raycast(ray, out hit))
             {
                 GameObject g = hit.transform.gameObject;
@@ -370,6 +336,42 @@ namespace Assets.Script
         public void Close()
         {
             Application.Quit();
+        }
+
+        /// <summary>
+        /// 取消高亮
+        /// </summary>
+        public void CancelHighlight()
+        {
+            if (_lastClickTransform != null)
+            {
+                foreach (Transform childTransform in _lastClickTransform)
+                {
+                    ChangeShader(childTransform.gameObject, StandShader);
+                }
+            }
+            if (_lastClickFloor != null)
+            {
+                foreach (Transform cell in _lastClickFloor)
+                {
+                    ChangeShader(cell.gameObject, StandShader);
+                }
+            }
+            if (_lastClickCell != null)
+            {
+                ChangeShader(_lastClickCell, StandShader);
+            }
+            if (_lastClickGood != null)
+            {
+                ChangeShader(_lastClickGood.gameObject, StandShader);
+            }
+            if (_showGoods.Count > 0)
+            {
+                foreach (var good in _showGoods)
+                {
+                    ChangeShader(good, StandShader);
+                }
+            }
         }
     }
 }

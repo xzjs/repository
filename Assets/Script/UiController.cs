@@ -237,7 +237,6 @@ namespace Assets.Script
                     break;
             }
             ShowData(2, dictionary);
-            GameController.TakeOrReleaseController();
         }
 
         /// <summary>
@@ -246,7 +245,6 @@ namespace Assets.Script
         public void CloseDetail()
         {
             TweenPositions[0].PlayReverse();
-            GameController.TakeOrReleaseController();
             if (ShowSimilar.activeSelf)
             {
                 ShowSimilar.SetActive(false);
@@ -298,7 +296,6 @@ namespace Assets.Script
             if (PlanList.activeSelf)
             {
                 PlanList.SetActive(false);
-                GameController.TakeOrReleaseController();
             }
             else
             {
@@ -332,7 +329,6 @@ namespace Assets.Script
         public void CloseMenu()
         {
             TweenPositions[1].PlayReverse();
-            GameController.TakeOrReleaseController();
         }
 
         /// <summary>

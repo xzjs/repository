@@ -26,27 +26,7 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("tab"))
-        {
-            TakeOrReleaseController();
-        }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            TweenPosition.PlayForward();
-            TakeOrReleaseController();
-        }
-    }
-
-    /// <summary>
-    /// 取得控制
-    /// </summary>
-    /// <param name="take">是否释放控制</param>
-    public void TakeOrReleaseController()
-    {
-        is_control = !is_control;
-        Cursor.lockState = is_control ? CursorLockMode.Locked : CursorLockMode.None;
-        Cursor.visible = !is_control;
-        FpsController.GetComponent<FirstPersonController>().enabled = is_control;
+        
     }
 
     /// <summary>

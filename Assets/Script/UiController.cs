@@ -11,13 +11,13 @@ namespace Assets.Script
         public UIGrid[] UiGrids;
         public GameObject DetaillView, PlanList, ShowSimilar;
         public TweenPosition[] TweenPositions;
-        public FirstPersonController First;
         public GodPerspective GodPerspective;
         public UISlider[] Sliders;
         public GameController GameController;
         public UIToggle UiToggle;
         public UISprite FrontSight;
         public Detail Detail;
+        public Transform FirstCameraTransform;
 
         private Dictionary<string, Good> _dictionary;
 
@@ -177,6 +177,11 @@ namespace Assets.Script
                         ChangeShader(g, RimLightShader, true);
                         ShowDetail(g.transform.parent.name, "Cell");
                         break;
+                    case "Plane":
+                        Vector3 targetPos = hit.point;
+                        FirstCameraTransform.position = new Vector3(targetPos.x, 2, targetPos.z);
+                        break;
+
                 }
             }
         }
@@ -252,7 +257,7 @@ namespace Assets.Script
         /// 显示同类货物
         /// </summary>
         /// <param name="goodName">货物名称</param>
-        public void ShowSimilarGood(string goodName=null)
+        public void ShowSimilarGood(string goodName = null)
         {
             if (goodName == null)
             {

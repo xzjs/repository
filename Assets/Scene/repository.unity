@@ -77807,7 +77807,7 @@ GameObject:
   - component: {fileID: 1275009505}
   m_Layer: 0
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: Plane
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -107304,7 +107304,6 @@ MonoBehaviour:
   TweenPositions:
   - {fileID: 956914654}
   - {fileID: 1222432652}
-  First: {fileID: 0}
   GodPerspective: {fileID: 1677449607}
   Sliders:
   - {fileID: 1755910065}
@@ -107314,6 +107313,7 @@ MonoBehaviour:
   UiToggle: {fileID: 539467583}
   FrontSight: {fileID: 1475321062}
   Detail: {fileID: 956914655}
+  FirstCameraTransform: {fileID: 1454814232}
   RimLightShader: {fileID: 4800000, guid: 2b035a3df6d047d4eb750a5643f97f02, type: 3}
   StandShader: {fileID: 4800000, guid: b573a01bd77d21242b46ba508351aea4, type: 3}
   RimColor: {r: 1, g: 0.90993917, b: 0.18382353, a: 1}

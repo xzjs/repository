@@ -11,12 +11,12 @@ namespace Assets.Script
 	
         // Update is called once per frame
         void Update () {
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(1))
             {
                 float y = Input.GetAxis("Mouse X") * speed;
                 float x = Input.GetAxis("Mouse Y") * speed;
-                transform.Rotate(-x,0,0,Space.World);
-                transform.Rotate(0,y,0);
+                transform.Rotate(-x,0,0);
+                transform.Rotate(0,y,0, Space.World);
             }
         }
     }

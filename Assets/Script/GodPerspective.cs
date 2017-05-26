@@ -31,7 +31,7 @@ namespace Assets.Script
                 GetComponent<Camera>().fieldOfView = Mathf.Clamp(GetComponent<Camera>().fieldOfView, Near, Far);
             }
             //鼠标右键实现视角转动，类似第一人称视角
-            if (Input.GetMouseButton(1))
+            if (Input.GetMouseButton(0))
             {
                 float rotationX = Input.GetAxis("Mouse X") * SensitivityX;
                 float rotationY = Input.GetAxis("Mouse Y") * SensitivityY;

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Assets.Script;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
+using FirstPersonController = Assets.Script.FirstPersonController;
 
 public class GameController : MonoBehaviour
 {

@@ -306,9 +306,9 @@ namespace Assets.Script
         /// </summary>
         public void Config()
         {
-            First.m_WalkSpeed = Sliders[0].value * 10;
-            First.m_MouseLook.XSensitivity = Sliders[2].value * 4;
-            First.m_MouseLook.YSensitivity = Sliders[2].value * 4;
+            //First.m_WalkSpeed = Sliders[0].value * 10;
+            //First.m_MouseLook.XSensitivity = Sliders[2].value * 4;
+            //First.m_MouseLook.YSensitivity = Sliders[2].value * 4;
             GodPerspective.SensitivetyMouseWheel = Sliders[1].value * 20;
             if (UiToggle.value)
             {

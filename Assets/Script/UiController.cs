@@ -112,31 +112,31 @@ namespace Assets.Script
 
             #region 更换准星图标
 
-            if (Physics.Raycast(ray, out hit))
-            {
-                GameObject g = hit.transform.gameObject;
-                if (g.tag == "Shelf" || g.tag == "Floor" || g.tag == "Cell" || g.tag == "Good")
-                {
-                    if (FrontSight.spriteName != "CanClick")
-                    {
-                        FrontSight.spriteName = "CanClick";
-                    }
-                }
-                else
-                {
-                    if (FrontSight.spriteName != "Click")
-                    {
-                        FrontSight.spriteName = "Click";
-                    }
-                }
-            }
-            else
-            {
-                if (FrontSight.spriteName != "Click")
-                {
-                    FrontSight.spriteName = "Click";
-                }
-            }
+            //if (Physics.Raycast(ray, out hit))
+            //{
+            //    GameObject g = hit.transform.gameObject;
+            //    if (g.tag == "Shelf" || g.tag == "Floor" || g.tag == "Cell" || g.tag == "Good")
+            //    {
+            //        if (FrontSight.spriteName != "CanClick")
+            //        {
+            //            FrontSight.spriteName = "CanClick";
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (FrontSight.spriteName != "Click")
+            //        {
+            //            FrontSight.spriteName = "Click";
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    if (FrontSight.spriteName != "Click")
+            //    {
+            //        FrontSight.spriteName = "Click";
+            //    }
+            //}
 
             #endregion
 
@@ -199,7 +199,7 @@ namespace Assets.Script
             int shelfIndex = Convert.ToInt32(strings[0]) - 1;
             int floorIndex = Convert.ToInt32(strings[1]) - 1;
             Dictionary<string, Good> dictionary = new Dictionary<string, Good>();
-            Good good;
+            //Good good;
             switch (clickTag)
             {
                 case "Floor":
@@ -207,20 +207,22 @@ namespace Assets.Script
 
                     foreach (var _cell in cells)
                     {
-                        good = _cell.good;
-                        if (dictionary.ContainsKey(good.name))
+                        foreach (var good in _cell.goods)
                         {
-                            dictionary[good.name].num += good.num;
-                        }
-                        else
-                        {
-                            dictionary[good.name] = new Good
+                            if (dictionary.ContainsKey(good.name))
                             {
-                                id = 0,
-                                name = good.name,
-                                model_name = good.model_name,
-                                unit = good.unit
-                            };
+                                dictionary[good.name].num += good.num;
+                            }
+                            else
+                            {
+                                dictionary[good.name] = new Good
+                                {
+                                    id = 0,
+                                    name = good.name,
+                                    model_name = good.model_name,
+                                    unit = good.unit
+                                };
+                            }
                         }
                     }
                     break;
@@ -231,9 +233,11 @@ namespace Assets.Script
                     }
                     int cellIndex = Convert.ToInt32(strings[2]) - 1;
                     Cell cell = GameController.Shelves[shelfIndex].floors[floorIndex].cells[cellIndex];
-                    good = cell.good;
-                    dictionary[good.name] = good;
-                    Detail.SetData(good);
+                    foreach (var good in cell.goods)
+                    {
+                        dictionary[good.name] = good;
+                        Detail.SetData(good);
+                    }
                     break;
             }
             ShowData(2, dictionary);
@@ -291,16 +295,12 @@ namespace Assets.Script
             }
         }
 
+        /// <summary>
+        /// 调度计划按钮点击事件
+        /// </summary>
         public void PlanListButtonClick()
         {
-            if (PlanList.activeSelf)
-            {
-                PlanList.SetActive(false);
-            }
-            else
-            {
-                PlanList.SetActive(true);
-            }
+            PlanList.SetActive(!PlanList.activeSelf);
         }
 
         /// <summary>

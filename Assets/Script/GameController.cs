@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Assets.Script;
 using UnityEngine;
-using UnityStandardAssets.Characters.FirstPerson;
-using FirstPersonController = Assets.Script.FirstPersonController;
 
 public class GameController : MonoBehaviour
 {
@@ -19,14 +17,14 @@ public class GameController : MonoBehaviour
     void Start()
     {
         GooDictionary = new Dictionary<string, List<GameObject>>();
-        TotalDictionary=new Dictionary<string, Good>();
-        StartCoroutine(GetData("http://repository.xzjs.love/api/shelfs"));
+        TotalDictionary = new Dictionary<string, Good>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     /// <summary>
@@ -46,10 +44,16 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void LoadGoods(string url)
+    {
+        //StartCoroutine(GetData("http://repository.xzjs.love/api/shelfs"));
+        StartCoroutine(GetData(url));
+    }
+
     private IEnumerator GetData(string url)
     {
 
-        WWW getData = new WWW("http://repository.xzjs.love/api/shelfs");
+        WWW getData = new WWW(url);
         yield return getData;
         try
         {
@@ -69,67 +73,70 @@ public class GameController : MonoBehaviour
                     {
                         foreach (var cell in floor.cells)
                         {
-                            var good = cell.good;
-                            if (good == null) continue;
-                            GameObject g = Resources.Load("Goods/" + good.model_name) as GameObject;
-                            var c = GameObject.Find(string.Format("{0}-{1}-{2}", shelf.no, floor.no, cell.no)).transform;
-                            var clone = Instantiate(g, c).transform;
-                            if (GooDictionary.ContainsKey(clone.name))
+                            if (cell.goods.Length > 0)
                             {
-                                GooDictionary[clone.name].Add(clone.gameObject);
-                            }
-                            else
-                            {
-                                GooDictionary[clone.name] = new List<GameObject>
+                                GameObject g = Resources.Load("Goods/" + cell.goods[0].model_name) as GameObject;
+                                var c = GameObject.Find(string.Format("{0}-{1}-{2}", shelf.no, floor.no, cell.no)).transform;
+                                var clone = Instantiate(g, c).transform;
+                                if (GooDictionary.ContainsKey(clone.name))
                                 {
-                                    clone.gameObject
-                                };
-                            }
-                            clone.Rotate(90, 0, 0);
-                            if (shelf.type == 0)
-                            {
-                                clone.localPosition = new Vector3(0, 0, 0.2f);
-                            }
-
-                            #region 货架字典
-
-                            if (dictionary.ContainsKey(good.name))
-                            {
-                                dictionary[good.name].num += good.num;
-                            }
-                            else
-                            {
-                                dictionary[good.name] = new Good
+                                    GooDictionary[clone.name].Add(clone.gameObject);
+                                }
+                                else
                                 {
-                                    id = 0,
-                                    name = good.name,
-                                    model_name = good.model_name,
-                                    unit = good.unit,
-                                    num = good.num
-                                };
-                            }
-
-                            #endregion
-
-                            #region 总字典
-
-                            if (TotalDictionary.ContainsKey(good.name))
-                            {
-                                TotalDictionary[good.name].num += good.num;
-                            }
-                            else
-                            {
-                                TotalDictionary[good.name] = new Good
+                                    GooDictionary[clone.name] = new List<GameObject>{
+                                        clone.gameObject
+                                    };
+                                }
+                                clone.Rotate(90, 0, 0);
+                                if (shelf.type == 0)
                                 {
-                                    id = 0,
-                                    name = good.name,
-                                    model_name = good.model_name,
-                                    unit = good.unit,
-                                    num = good.num
-                                };
+                                    clone.localPosition = new Vector3(0, 0, 0.2f);
+                                }
+                            }
+                            foreach (var good in cell.goods)
+                            {
+                                #region 货架字典
+
+                                if (dictionary.ContainsKey(good.name))
+                                {
+                                    dictionary[good.name].num += good.num;
+                                }
+                                else
+                                {
+                                    dictionary[good.name] = new Good
+                                    {
+                                        id = 0,
+                                        name = good.name,
+                                        model_name = good.model_name,
+                                        unit = good.unit,
+                                        num = good.num
+                                    };
+                                }
+
+                                #endregion
+
+                                #region 总字典
+
+                                if (TotalDictionary.ContainsKey(good.name))
+                                {
+                                    TotalDictionary[good.name].num += good.num;
+                                }
+                                else
+                                {
+                                    TotalDictionary[good.name] = new Good
+                                    {
+                                        id = 0,
+                                        name = good.name,
+                                        model_name = good.model_name,
+                                        unit = good.unit,
+                                        num = good.num
+                                    };
+                                }
+
+                                #endregion
                             }
 
-                            #endregion
 
                         }
                     }

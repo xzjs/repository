@@ -21,7 +21,7 @@ namespace Assets.Script
         public int id;
         public int no;
         public int floor_id;
-        public Good good;
+        public Good[] goods;
     }
 
     [Serializable]

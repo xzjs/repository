@@ -6,19 +6,25 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    public GameObject MainCamera, FpsController;
+    public GameObject MainCamera;
     public Shelf[] Shelves;
     public Dictionary<string, List<GameObject>> GooDictionary;
     public TweenPosition TweenPosition;
     public Dictionary<string, Good> TotalDictionary;
 
-    private bool is_control = true;
     // Use this for initialization
     void Start()
     {
         GooDictionary = new Dictionary<string, List<GameObject>>();
         TotalDictionary = new Dictionary<string, Good>();
-        
+        if (Application.isEditor)
+        {
+            LoadGoods();
+        }
+        else
+        {
+            Application.ExternalCall("LoadComplete");
+        }
     }
 
     // Update is called once per frame
@@ -35,21 +41,27 @@ public class GameController : MonoBehaviour
         if (MainCamera.activeSelf)
         {
             MainCamera.SetActive(false);
-            FpsController.SetActive(true);
         }
         else
         {
-            MainCamera.SetActive(true); ;
-            FpsController.SetActive(false);
+            MainCamera.SetActive(true);
         }
     }
 
-    public void LoadGoods(string url)
+    /// <summary>
+    /// 协程调用加载货物
+    /// </summary>
+    /// <param name="url"></param>
+    public void LoadGoods(string url = null)
     {
-        //StartCoroutine(GetData("http://repository.xzjs.love/api/shelfs"));
-        StartCoroutine(GetData(url));
+        StartCoroutine(string.IsNullOrEmpty(url) ? GetData("http://repository.xzjs.love/api/shelfs") : GetData(url));
     }
 
+    /// <summary>
+    /// 加载货物的协程
+    /// </summary>
+    /// <param name="url"></param>
+    /// <returns></returns>
     private IEnumerator GetData(string url)
     {
 

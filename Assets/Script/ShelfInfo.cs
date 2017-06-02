@@ -39,8 +39,19 @@ namespace Assets.Script
         public int no;
         public int type;
         public Floor[] floors;
-        public string created_at;
-        public string updated_at;
+    }
+
+    /// <summary>
+    /// 记录类
+    /// </summary>
+    [Serializable]
+    public class Record
+    {
+        public string name;
+        public string action;
+        public string time;
+        public string num;
+        public string unit;
     }
 
     public static class JsonHelper
@@ -70,18 +81,5 @@ namespace Assets.Script
         {
             public T[] Items;
         }
-    }
-
-    /// <summary>
-    /// 记录类
-    /// </summary>
-    public class Record
-    {
-        public int id;
-        public string name;
-        public string action;
-        public string time;
-        public string num;
-        public string unit;
     }
 }

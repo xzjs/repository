@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
     public Dictionary<string, List<GameObject>> GooDictionary;
     public TweenPosition TweenPosition;
     public Dictionary<string, Good> TotalDictionary;
+    public string FlowUrl, PlanUrl;
 
     // Use this for initialization
     void Start()
@@ -20,6 +21,8 @@ public class GameController : MonoBehaviour
         if (Application.isEditor)
         {
             LoadGoods();
+            FlowUrl = "http://repository.xzjs.love/flow.json";
+            PlanUrl= "http://repository.xzjs.love/plan.json";
         }
         else
         {
@@ -55,6 +58,24 @@ public class GameController : MonoBehaviour
     public void LoadGoods(string url = null)
     {
         StartCoroutine(string.IsNullOrEmpty(url) ? GetData("http://repository.xzjs.love/api/shelfs") : GetData(url));
+    }
+
+    /// <summary>
+    /// 设置货物流动url
+    /// </summary>
+    /// <param name="url"></param>
+    public void SetFlowUrl(string url = null)
+    {
+        FlowUrl = url;
+    }
+
+    /// <summary>
+    /// 设置调度计划url
+    /// </summary>
+    /// <param name="url"></param>
+    public void SetPlanUrl(string url = null)
+    {
+        PlanUrl = url;
     }
 
     /// <summary>

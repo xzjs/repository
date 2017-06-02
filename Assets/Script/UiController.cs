@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Assets.Script;
 using UnityEngine;
@@ -301,7 +302,16 @@ public class UiController : MonoBehaviour
     /// </summary>
     public void PlanListButtonClick()
     {
-        PlanList.SetActive(!PlanList.activeSelf);
+        //PlanList.SetActive(!PlanList.activeSelf);
+        if (PlanList.activeSelf)
+        {
+            PlanList.SetActive(false);
+        }
+        else
+        {
+            PlanList.SetActive(true);
+            StartCoroutine(LoadPlan());
+        }
     }
 
     /// <summary>
@@ -408,6 +418,39 @@ public class UiController : MonoBehaviour
     public void GameShow(string name_tag)
     {
         string[] ss = name_tag.Split('_');
-        ShowDetail(ss[0],ss[1]);
+        ShowDetail(ss[0], ss[1]);
+    }
+
+    public void ShowMenu()
+    {
+        TweenPositions[1].PlayForward();
+    }
+
+    private IEnumerator LoadPlan()
+    {
+        WWW getData = new WWW(GameController.PlanUrl);
+        yield return getData;
+
+        if (getData.error != null)
+        {
+            Debug.Log(getData.error);
+        }
+        else
+        {
+            Debug.Log(getData.text);
+            UIGrid grid = PlanList.GetComponentInChildren<UIGrid>();
+            foreach (Transform cell in grid.transform)
+            {
+                Destroy(cell.gameObject);
+            }
+            string[] plans = JsonHelper.FromJson<string>("{\"Items\":" + getData.text + "}");
+            foreach (var plan in plans)
+            {
+                GameObject labelGameObject = Resources.Load("UI/Label") as GameObject;
+                labelGameObject.GetComponent<UILabel>().text = plan;
+                grid.gameObject.AddChild(labelGameObject);
+            }
+            grid.repositionNow = true;
+        }
     }
 }

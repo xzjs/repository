@@ -17,6 +17,7 @@ public class UiController : MonoBehaviour
     public UISprite FrontSight;
     public Detail Detail;
     public Transform FirstCameraTransform;
+    public Texture2D MouseTexture2D, FootTexture2D,DefaultTexture2D;
 
     private Dictionary<string, Good> _dictionary;
 
@@ -101,6 +102,7 @@ public class UiController : MonoBehaviour
     {
         _lastClickTransform = null;
         _showGoods = new List<GameObject>();
+        Cursor.SetCursor(DefaultTexture2D, Vector2.zero, CursorMode.ForceSoftware);
     }
 
     void Update()
@@ -111,31 +113,26 @@ public class UiController : MonoBehaviour
 
         #region 更换准星图标
 
-        //if (Physics.Raycast(ray, out hit))
-        //{
-        //    GameObject g = hit.transform.gameObject;
-        //    if (g.tag == "Shelf" || g.tag == "Floor" || g.tag == "Cell" || g.tag == "Good")
-        //    {
-        //        if (FrontSight.spriteName != "CanClick")
-        //        {
-        //            FrontSight.spriteName = "CanClick";
-        //        }
-        //    }
-        //    else
-        //    {
-        //        if (FrontSight.spriteName != "Click")
-        //        {
-        //            FrontSight.spriteName = "Click";
-        //        }
-        //    }
-        //}
-        //else
-        //{
-        //    if (FrontSight.spriteName != "Click")
-        //    {
-        //        FrontSight.spriteName = "Click";
-        //    }
-        //}
+        if (Physics.Raycast(ray, out hit))
+        {
+            GameObject g = hit.transform.gameObject;
+            if (g.tag == "Shelf" || g.tag == "Floor" || g.tag == "Cell" || g.tag == "Good")
+            {
+                Cursor.SetCursor(MouseTexture2D, Vector2.zero, CursorMode.ForceSoftware);
+            }
+            else if (g.tag == "Plane")
+            {
+                Cursor.SetCursor(FootTexture2D, Vector2.zero, CursorMode.ForceSoftware);
+            }
+            else
+            {
+                Cursor.SetCursor(DefaultTexture2D, Vector2.zero, CursorMode.ForceSoftware);
+            }
+        }
+        else
+        {
+            Cursor.SetCursor(DefaultTexture2D, Vector2.zero, CursorMode.ForceSoftware);
+        }
 
         #endregion
 

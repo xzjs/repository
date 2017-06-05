@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    public GameObject MainCamera;
+    public GameObject MainCamera, FirstPersonCamera;
     public Shelf[] Shelves;
     public Dictionary<string, List<GameObject>> GooDictionary;
     public TweenPosition TweenPosition;
@@ -22,7 +22,7 @@ public class GameController : MonoBehaviour
         {
             LoadGoods();
             FlowUrl = "http://repository.xzjs.love/flow.json";
-            PlanUrl= "http://repository.xzjs.love/plan.json";
+            PlanUrl = "http://repository.xzjs.love/plan.json";
         }
         else
         {
@@ -44,10 +44,12 @@ public class GameController : MonoBehaviour
         if (MainCamera.activeSelf)
         {
             MainCamera.SetActive(false);
+            FirstPersonCamera.SetActive(true);
         }
         else
         {
             MainCamera.SetActive(true);
+            FirstPersonCamera.SetActive(false);
         }
     }
 

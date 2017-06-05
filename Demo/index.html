@@ -14,6 +14,8 @@
       function LoadComplete () {
         console.log('load complete');
         gameInstance.SendMessage('GameController','LoadGoods','http://repository.xzjs.love/api/shelfs');
+        gameInstance.SendMessage('GameController','SetFlowUrl','flow.json');
+        gameInstance.SendMessage('GameController','SetPlanUrl','plan.json');
       }
 
       function ClickCallback (name,tag,json) {

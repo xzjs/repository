@@ -29,6 +29,7 @@ public class UiController : MonoBehaviour
     private Transform _lastClickTransform, _lastClickFloor;
     private GameObject _lastClickCell, _lastClickGood;
     private List<GameObject> _showGoods;
+    private string _mouseStatus;
 
     public void ChangePerspective()
     {
@@ -118,20 +119,36 @@ public class UiController : MonoBehaviour
             GameObject g = hit.transform.gameObject;
             if (g.tag == "Shelf" || g.tag == "Floor" || g.tag == "Cell" || g.tag == "Good")
             {
-                Cursor.SetCursor(MouseTexture2D, Vector2.zero, CursorMode.ForceSoftware);
+                if (_mouseStatus != "hand")
+                {
+                    _mouseStatus = "hand";
+                    Cursor.SetCursor(MouseTexture2D, Vector2.zero, CursorMode.ForceSoftware);
+                }
             }
             else if (g.tag == "Plane")
             {
-                Cursor.SetCursor(FootTexture2D, Vector2.zero, CursorMode.ForceSoftware);
+                if (_mouseStatus != "foot")
+                {
+                    _mouseStatus = "foot";
+                    Cursor.SetCursor(FootTexture2D, Vector2.zero, CursorMode.ForceSoftware);
+                }
             }
             else
             {
-                Cursor.SetCursor(DefaultTexture2D, Vector2.zero, CursorMode.ForceSoftware);
+                if (_mouseStatus != "default")
+                {
+                    _mouseStatus = "default";
+                    Cursor.SetCursor(DefaultTexture2D, Vector2.zero, CursorMode.ForceSoftware);
+                }  
             }
         }
         else
         {
-            Cursor.SetCursor(DefaultTexture2D, Vector2.zero, CursorMode.ForceSoftware);
+            if (_mouseStatus != "default")
+            {
+                _mouseStatus = "default";
+                Cursor.SetCursor(DefaultTexture2D, Vector2.zero, CursorMode.ForceSoftware);
+            }
         }
 
         #endregion

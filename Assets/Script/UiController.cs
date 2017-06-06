@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Assets.Script;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class UiController : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class UiController : MonoBehaviour
     public UISprite FrontSight;
     public Detail Detail;
     public Transform FirstCameraTransform;
-    public Texture2D MouseTexture2D, FootTexture2D,DefaultTexture2D;
+    public Texture2D MouseTexture2D, FootTexture2D, DefaultTexture2D;
 
     private Dictionary<string, Good> _dictionary;
 
@@ -139,7 +140,7 @@ public class UiController : MonoBehaviour
                 {
                     _mouseStatus = "default";
                     Cursor.SetCursor(DefaultTexture2D, Vector2.zero, CursorMode.ForceSoftware);
-                }  
+                }
             }
         }
         else
@@ -195,7 +196,8 @@ public class UiController : MonoBehaviour
                     break;
                 case "Plane":
                     Vector3 targetPos = hit.point;
-                    FirstCameraTransform.position = new Vector3(targetPos.x, 2, targetPos.z);
+                    //FirstCameraTransform.position = new Vector3(targetPos.x, 2, targetPos.z);
+                    FirstCameraTransform.GetComponent<NavMeshAgent>().destination = targetPos;
                     break;
 
             }
@@ -333,9 +335,8 @@ public class UiController : MonoBehaviour
     /// </summary>
     public void Config()
     {
-        //First.m_WalkSpeed = Sliders[0].value * 10;
-        //First.m_MouseLook.XSensitivity = Sliders[2].value * 4;
-        //First.m_MouseLook.YSensitivity = Sliders[2].value * 4;
+        FirstCameraTransform.GetComponent<NavMeshAgent>().speed = Sliders[0].value * 7f;
+        FirstCameraTransform.GetComponent<FirstPersonController>().speed = Sliders[2].value * 4;
         GodPerspective.SensitivetyMouseWheel = Sliders[1].value * 20;
         if (UiToggle.value)
         {

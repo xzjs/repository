@@ -2,7 +2,7 @@
 
 namespace Assets.Script
 {
-    public class FirstPersonController : MonoBehaviour {
+    public class MyFirstPersonController : MonoBehaviour {
         public float speed = 2f;
         // Use this for initialization
         void Start () {
@@ -15,9 +15,12 @@ namespace Assets.Script
             {
                 float y = Input.GetAxis("Mouse X") * speed;
                 float x = Input.GetAxis("Mouse Y") * speed;
-                transform.Rotate(-x,0,0);
+                transform.GetComponentInChildren<Camera>().transform.Rotate(-x,0,0);
                 transform.Rotate(0,y,0, Space.World);
             }
+            float h = Input.GetAxis("Horizontal"); //获取水平轴
+            float v = Input.GetAxis("Vertical"); //获取垂直轴
+            transform.Translate(h * Time.deltaTime * speed, 0, v * Time.deltaTime * speed);
         }
     }
 }

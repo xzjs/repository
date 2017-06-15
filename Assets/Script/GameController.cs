@@ -20,7 +20,7 @@ public class GameController : MonoBehaviour
         TotalDictionary = new Dictionary<string, Good>();
         if (Application.isEditor)
         {
-            LoadGoods();
+            LoadGoods("http://192.168.4.96:48093/web/shelfs.json");
             FlowUrl = "http://repository.xzjs.love/flow.json";
             PlanUrl = "http://repository.xzjs.love/plan.json";
         }
@@ -57,9 +57,9 @@ public class GameController : MonoBehaviour
     /// 协程调用加载货物
     /// </summary>
     /// <param name="url"></param>
-    public void LoadGoods(string url = null)
+    public void LoadGoods(string url)
     {
-        StartCoroutine(string.IsNullOrEmpty(url) ? GetData("http://repository.xzjs.love/api/shelfs") : GetData(url));
+        StartCoroutine(GetData(url));
     }
 
     /// <summary>
@@ -99,7 +99,7 @@ public class GameController : MonoBehaviour
             else
             {
                 //Debug.Log(getData.text);
-                var shelfs = JsonHelper.FromJson<Shelf>("{\"Items\":" + getData.text + "}");
+                var shelfs = JsonHelper.FromJson<Shelf>("{\"Items\": " + getData.text + "}");
                 Shelves = shelfs;
                 foreach (var shelf in shelfs)
                 {

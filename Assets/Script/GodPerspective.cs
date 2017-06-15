@@ -35,7 +35,8 @@ namespace Assets.Script
             {
                 float rotationX = Input.GetAxis("Mouse X") * SensitivityX;
                 float rotationY = Input.GetAxis("Mouse Y") * SensitivityY;
-                transform.Rotate(-rotationY, rotationX, 0);
+                //transform.Rotate(-rotationY, rotationX, 0);
+                transform.Translate(-rotationY * Speed * Time.deltaTime, 0, rotationX * Speed * Time.deltaTime,Space.World);
             }
 
             ////键盘按钮←和→实现视角水平旋转
@@ -45,14 +46,14 @@ namespace Assets.Script
             //    transform.Rotate(0, 0, rotationZ);
             //}
 
-            if (Math.Abs(Input.GetAxis("Vertical")) > 0.1)
-            {
-                GetComponent<Camera>().transform.Translate(new Vector3(0, 0, Input.GetAxis("Vertical") * Speed * Time.deltaTime));
-            }
-            if (Math.Abs(Input.GetAxis("Horizontal")) > 0.1)
-            {
-                GetComponent<Camera>().transform.Translate(new Vector3(Input.GetAxis("Horizontal") * Speed * Time.deltaTime, 0, 0));
-            }
+            //if (Math.Abs(Input.GetAxis("Vertical")) > 0.1)
+            //{
+            //    GetComponent<Camera>().transform.Translate(new Vector3(0, 0, Input.GetAxis("Vertical") * Speed * Time.deltaTime));
+            //}
+            //if (Math.Abs(Input.GetAxis("Horizontal")) > 0.1)
+            //{
+            //    GetComponent<Camera>().transform.Translate(new Vector3(Input.GetAxis("Horizontal") * Speed * Time.deltaTime, 0, 0));
+            //}
         }
     }
 }

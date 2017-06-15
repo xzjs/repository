@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23054092831343788}
   - component: {fileID: 64014542521287512}
   m_Layer: 0
-  m_Name: jinho
+  m_Name: default
   m_TagString: Good
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

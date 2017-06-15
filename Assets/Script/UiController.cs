@@ -9,7 +9,7 @@ public class UiController : MonoBehaviour
 {
     public UILabel PerspectiveLabel, KeyLabel, TitleLabel;
     public UIGrid[] UiGrids;
-    public GameObject DetaillView, PlanList, ShowSimilar;
+    public GameObject DetaillView, PlanList, ShowSimilar, Summary;
     public TweenPosition[] TweenPositions;
     public GodPerspective GodPerspective;
     public UISlider[] Sliders;
@@ -31,7 +31,15 @@ public class UiController : MonoBehaviour
     private GameObject _lastClickCell, _lastClickGood;
     private List<GameObject> _showGoods;
     private string _mouseStatus;
+    private NavMeshAgent _navMeshAgent;
 
+    /// <summary>
+    /// 显示/关闭物资汇总窗口
+    /// </summary>
+    public void ShowSummary()
+    {
+        Summary.SetActive(!Summary.activeSelf);
+    }
     public void ChangePerspective()
     {
         PerspectiveLabel.text = PerspectiveLabel.text == "漫游视角" ? "全局视角" : "漫游视角";
@@ -105,6 +113,7 @@ public class UiController : MonoBehaviour
         _lastClickTransform = null;
         _showGoods = new List<GameObject>();
         Cursor.SetCursor(DefaultTexture2D, Vector2.zero, CursorMode.ForceSoftware);
+        _navMeshAgent = FirstCameraTransform.GetComponent<NavMeshAgent>();
     }
 
     void Update()
@@ -154,6 +163,17 @@ public class UiController : MonoBehaviour
 
         #endregion
 
+        #region 取消目标点
+
+        if (_navMeshAgent.enabled)
+        {
+            if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
+            {
+                _navMeshAgent.enabled = false;
+            }
+        }
+        #endregion
+
         if (!Input.GetButtonDown("Fire1")) return;
         CancelHighlight();
         if (Physics.Raycast(ray, out hit))
@@ -196,8 +216,10 @@ public class UiController : MonoBehaviour
                     break;
                 case "Plane":
                     Vector3 targetPos = hit.point;
-                    //FirstCameraTransform.position = new Vector3(targetPos.x, 2, targetPos.z);
-                    FirstCameraTransform.GetComponent<NavMeshAgent>().destination = targetPos;
+                    _navMeshAgent.enabled = true;
+                    _navMeshAgent.destination = targetPos;
+             
+                    
                     break;
 
             }
@@ -336,7 +358,7 @@ public class UiController : MonoBehaviour
     public void Config()
     {
         FirstCameraTransform.GetComponent<NavMeshAgent>().speed = Sliders[0].value * 7f;
-        FirstCameraTransform.GetComponent<FirstPersonController>().speed = Sliders[2].value * 4;
+        FirstCameraTransform.GetComponent<MyFirstPersonController>().speed = Sliders[2].value * 4;
         GodPerspective.SensitivetyMouseWheel = Sliders[1].value * 20;
         if (UiToggle.value)
         {

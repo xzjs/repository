@@ -118,7 +118,15 @@ public class UiController : MonoBehaviour
 
     void Update()
     {
-        if (UICamera.Raycast(Input.mousePosition)) return;
+        if (UICamera.Raycast(Input.mousePosition))
+        {
+            if (_mouseStatus != "default")
+            {
+                _mouseStatus = "default";
+                Cursor.SetCursor(DefaultTexture2D, Vector2.zero, CursorMode.ForceSoftware);
+            }
+            return;
+        }
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
@@ -218,8 +226,6 @@ public class UiController : MonoBehaviour
                     Vector3 targetPos = hit.point;
                     _navMeshAgent.enabled = true;
                     _navMeshAgent.destination = targetPos;
-             
-                    
                     break;
 
             }
@@ -240,46 +246,54 @@ public class UiController : MonoBehaviour
         int floorIndex = Convert.ToInt32(strings[1]) - 1;
         Dictionary<string, Good> dictionary = new Dictionary<string, Good>();
         //Good good;
-        switch (clickTag)
+        try
         {
-            case "Floor":
-                Cell[] cells = GameController.Shelves[shelfIndex].floors[floorIndex].cells;
+            switch (clickTag)
+            {
+                case "Floor":
+                    Cell[] cells = GameController.Shelves[shelfIndex].floors[floorIndex].cells;
 
-                foreach (var _cell in cells)
-                {
-                    foreach (var good in _cell.goods)
+                    foreach (var _cell in cells)
                     {
-                        if (dictionary.ContainsKey(good.name))
+                        foreach (var good in _cell.goods)
                         {
-                            dictionary[good.name].num += good.num;
-                        }
-                        else
-                        {
-                            dictionary[good.name] = new Good
+                            if (dictionary.ContainsKey(good.name))
                             {
-                                id = 0,
-                                name = good.name,
-                                model_name = good.model_name,
-                                unit = good.unit
-                            };
+                                dictionary[good.name].num += good.num;
+                            }
+                            else
+                            {
+                                dictionary[good.name] = new Good
+                                {
+                                    id = 0,
+                                    name = good.name,
+                                    model_name = good.model_name,
+                                    unit = good.unit
+                                };
+                            }
                         }
                     }
-                }
-                break;
-            case "Cell":
-                if (_lastClickGood != null)
-                {
-                    ShowSimilar.SetActive(true);
-                }
-                int cellIndex = Convert.ToInt32(strings[2]) - 1;
-                Cell cell = GameController.Shelves[shelfIndex].floors[floorIndex].cells[cellIndex];
-                foreach (var good in cell.goods)
-                {
-                    dictionary[good.name] = good;
-                    Detail.SetData(good);
-                }
-                break;
+                    break;
+                case "Cell":
+                    if (_lastClickGood != null)
+                    {
+                        ShowSimilar.SetActive(true);
+                    }
+                    int cellIndex = Convert.ToInt32(strings[2]) - 1;
+                    Cell cell = GameController.Shelves[shelfIndex].floors[floorIndex].cells[cellIndex];
+                    foreach (var good in cell.goods)
+                    {
+                        dictionary[good.name] = good;
+                        Detail.SetData(good);
+                    }
+                    break;
+            }
         }
+        catch (Exception exception)
+        {
+            Debug.Log(exception);
+        }
+        
         ShowData(2, dictionary);
     }
 

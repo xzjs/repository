@@ -7,13 +7,15 @@ namespace Assets.Script
     {
         public UILabel TotaLabel;
         // Use this for initialization
-        void Start () {
-		
+        void Start()
+        {
+
         }
-	
+
         // Update is called once per frame
-        void Update () {
-		
+        void Update()
+        {
+
         }
 
         /// <summary>
@@ -25,7 +27,7 @@ namespace Assets.Script
             Dictionary<string, Good> totalDictionary =
                 GameObject.Find("GameController").GetComponent<GameController>().TotalDictionary;
             Good g = totalDictionary[good.name];
-            TotaLabel.text = string.Format("货物总计：{0}{1}",g.num,g.unit);
+            TotaLabel.text = string.Format("货物总计：{0} {1}", g.num, g.unit);
         }
     }
 }

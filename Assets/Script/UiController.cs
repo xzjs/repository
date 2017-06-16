@@ -143,7 +143,7 @@ public class UiController : MonoBehaviour
                     Cursor.SetCursor(MouseTexture2D, Vector2.zero, CursorMode.ForceSoftware);
                 }
             }
-            else if (g.tag == "Plane")
+            else if (g.tag == "Plane" && FirstCameraTransform.gameObject.activeSelf)
             {
                 if (_mouseStatus != "foot")
                 {
@@ -173,7 +173,7 @@ public class UiController : MonoBehaviour
 
         #region 取消目标点
 
-        if (_navMeshAgent.enabled)
+        if (_navMeshAgent.enabled && FirstCameraTransform.gameObject.activeSelf)
         {
             if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
             {
@@ -223,9 +223,12 @@ public class UiController : MonoBehaviour
                     MyClick(g.transform.parent.name, "Cell");
                     break;
                 case "Plane":
-                    Vector3 targetPos = hit.point;
-                    _navMeshAgent.enabled = true;
-                    _navMeshAgent.destination = targetPos;
+                    if (FirstCameraTransform.gameObject.activeSelf)
+                    {
+                        Vector3 targetPos = hit.point;
+                        _navMeshAgent.enabled = true;
+                        _navMeshAgent.destination = targetPos;
+                    }
                     break;
 
             }
@@ -251,8 +254,8 @@ public class UiController : MonoBehaviour
             switch (clickTag)
             {
                 case "Floor":
-                    Cell[] cells = GameController.Shelves[shelfIndex].floors[floorIndex].cells;
 
+                    Cell[] cells = GameController.Shelves[shelfIndex].floors[floorIndex].cells;
                     foreach (var _cell in cells)
                     {
                         foreach (var good in _cell.goods)
@@ -273,6 +276,7 @@ public class UiController : MonoBehaviour
                             }
                         }
                     }
+
                     break;
                 case "Cell":
                     if (_lastClickGood != null)
@@ -280,11 +284,11 @@ public class UiController : MonoBehaviour
                         ShowSimilar.SetActive(true);
                     }
                     int cellIndex = Convert.ToInt32(strings[2]) - 1;
-                    Cell cell = GameController.Shelves[shelfIndex].floors[floorIndex].cells[cellIndex];
-                    foreach (var good in cell.goods)
+                    Good[] goods = GameController.Shelves[shelfIndex].floors[floorIndex].cells[cellIndex].goods;
+                    foreach (var good in goods)
                     {
                         dictionary[good.name] = good;
-                        Detail.SetData(good);
+                        //Detail.SetData(good);
                     }
                     break;
             }
@@ -293,7 +297,6 @@ public class UiController : MonoBehaviour
         {
             Debug.Log(exception);
         }
-        
         ShowData(2, dictionary);
     }
 

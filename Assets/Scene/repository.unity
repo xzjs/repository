@@ -103605,6 +103605,7 @@ GameObject:
   - component: {fileID: 1677449604}
   - component: {fileID: 1677449603}
   - component: {fileID: 1677449607}
+  - component: {fileID: 1677449602}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -103612,6 +103613,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!81 &1677449602
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1677449601}
+  m_Enabled: 1
 --- !u!124 &1677449603
 Behaviour:
   m_ObjectHideFlags: 0
@@ -118031,7 +118039,7 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 0}
   mFont: {fileID: 114453194054853982, guid: c9fad7519c8803043ba9569f3c9f5065, type: 2}
-  mText: "\u8D27\u7269\u603B\u91CF\uFF1A20\u4EF6"
+  mText: 
   mFontSize: 20
   mFontStyle: 0
   mAlignment: 0
@@ -121334,7 +121342,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1973959895
 Transform:
   m_ObjectHideFlags: 0

@@ -13,10 +13,9 @@ public class GameController : MonoBehaviour
     public TweenPosition TweenPosition;
     public Dictionary<string, Good> TotalDictionary;
     public string FlowUrl, PlanUrl;
-    public string[] ModelNameStrings=new string[]
-    {
-        "baowenhu","default","fanghanfu","fangzaigongfu","humujing","jiaoxie","jijiushao","jiushengyi","kouzhao","maojinbei","maotan","mianru","mianyiku","micafu","neiku",
-        "shoudiantong","shoutao","shuidai","toudeng","wazi","xiexingju","yuxie","yuyiku","zhangpeng","zhediechuang","zhiyuanzhifu"
+    public string[] ModelNameStrings ={
+        "baowenhu","default","fanghanfu","fangzaigongfu","humujing","jiaoxie","jijiushao","jiushengyi","kouzhao","maojinbei","maotan","mianru","mianyiku",
+        "micafu","neiku","shoudiantong","shoutao","shuidai","toudeng","wazi","xiexingju","yuxie","yuyiku","zhangpeng","zhediechuang","zhiyuanzhifu"
     };
 
     // Use this for initialization

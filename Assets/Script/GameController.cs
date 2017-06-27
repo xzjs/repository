@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Script;
 using UnityEngine;
 
@@ -12,6 +13,11 @@ public class GameController : MonoBehaviour
     public TweenPosition TweenPosition;
     public Dictionary<string, Good> TotalDictionary;
     public string FlowUrl, PlanUrl;
+    public string[] ModelNameStrings=new string[]
+    {
+        "baowenhu","default","fanghanfu","fangzaigongfu","humujing","jiaoxie","jijiushao","jiushengyi","kouzhao","maojinbei","maotan","mianru","mianyiku","micafu","neiku",
+        "shoudiantong","shoutao","shuidai","toudeng","wazi","xiexingju","yuxie","yuyiku","zhangpeng","zhediechuang","zhiyuanzhifu"
+    };
 
     // Use this for initialization
     void Start()
@@ -21,8 +27,8 @@ public class GameController : MonoBehaviour
         if (Application.isEditor)
         {
             LoadGoods("http://192.168.4.96:48093/web/shelfs.json");
-            FlowUrl = "http://repository.xzjs.love/flow.json";
-            PlanUrl = "http://repository.xzjs.love/plan.json";
+            FlowUrl = "http://192.168.4.96:48093/web/flow.json";
+            PlanUrl = "http://192.168.4.96:48093/web/plan.json";
         }
         else
         {
@@ -110,6 +116,10 @@ public class GameController : MonoBehaviour
                         {
                             if (cell.goods.Length > 0)
                             {
+                                if (!ModelNameStrings.Contains(cell.goods[0].model_name))
+                                {
+                                    cell.goods[0].model_name = "default";
+                                }
                                 GameObject g = Resources.Load("Goods/" + cell.goods[0].model_name) as GameObject;
                                 var c = GameObject.Find(string.Format("{0}-{1}-{2}", shelf.no, floor.no, cell.no)).transform;
                                 var clone = Instantiate(g, c).transform;
